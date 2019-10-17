@@ -113,7 +113,6 @@ class Login extends Component {
           <Paper className={classes.form}>
             <CardMedia
               className={classes.loginLogo}
-              image="images/Logo.png"
             >
             </CardMedia>
             <FormGroup>

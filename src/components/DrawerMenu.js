@@ -30,9 +30,7 @@ class DrawerMenu extends Component {
     const {showMessage, hideMessage, userContext} = this.props;
     showMessage('Logging out');
 
-    this
-      .api
-      .logout()
+    this.api.logout()
       .then(() => {
         hideMessage();
         userContext.logout();
@@ -57,14 +55,12 @@ class DrawerMenu extends Component {
   render() {
     const {classes, open, userContext, onClose} = this.props;
     const {fullName, role, isAdmin} = userContext.user;
-
+    console.log('user context', userContext.user);
     if (!userContext.isLoggedIn) {
       return null;
     }
 
-    const roleName = isAdmin
-      ? `${ 'Admin'} - ${role.name}`
-      : role.name;
+    const roleName = isAdmin ? `${'Admin'} - ${role.name}` : role.name;
 
     return (
       <Drawer open={open} onClose={onClose}>

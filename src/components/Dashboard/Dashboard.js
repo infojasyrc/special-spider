@@ -312,9 +312,10 @@ class Dashboard extends Component {
     return (
       <FullLayout title="Special Spider App">
         <h1 className={classes.title}>Events</h1>
-        {this.renderContent()}
+        <h1 className={classes.title}>Accounts</h1>
+        {/*this.renderContent()*/}
         {this.renderAddButton()}
-        {this.renderPreviewEvent()}
+        {/*this.renderPreviewEvent()*/}
       </FullLayout>
     );
   }

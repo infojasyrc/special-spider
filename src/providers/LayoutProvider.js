@@ -7,7 +7,7 @@ export default class LayoutProvider extends Component {
 
     this.state = {
       type: LayoutTypes.FULL,
-      title: 'Belatrix Meet App',
+      title: 'Special Spider App',
       showLogo: false,
       action: (params) => {
         return params;
