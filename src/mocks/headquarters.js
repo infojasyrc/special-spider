@@ -10,19 +10,19 @@ const getHeadquarters = () => {
   staticHeadquarters = [
     {
       id: uuidv4(),
-      name: 'Buenos Aires'
+      name: 'Trujillo'
     }, {
       id: uuidv4(),
-      name: 'Mendoza Centro'
+      name: 'Piura'
     }, {
       id: uuidv4(),
-      name: 'Mendoza Chacras'
+      name: 'Cuzco'
     }, {
       id: uuidv4(),
       name: 'Lima'
     }, {
       id: uuidv4(),
-      name: 'Bogotá'
+      name: 'Arequipa'
     }
   ];
 

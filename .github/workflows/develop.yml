@@ -1,0 +1,45 @@
+name: Build and Deploy for Development
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node_version: [10, 12]
+    steps:
+      - name: Checkout Repo
+        uses: infojasyrc/special-spider@develop
+      - name: Install Dependencies
+        uses: npm install
+      - name: Build
+        uses: npm run build
+      - name: Archive Production artifact
+        uses: actions/upload-artifact@master
+        with:
+          name: dist
+          path: build
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Chekout Repo
+        uses: actions/checkout@develop
+      - name: Download artifact
+        uses: actions/download-artifact@master
+        with:
+          name: dist
+      - name: GitHub Action for Firebase
+        uses: w9jds/firebase-action@v1.1.0
+        with:
+          args: deploy --only hosting:dev
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}

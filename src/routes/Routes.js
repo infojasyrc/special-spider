@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Route} from 'react-router-dom';
 
 import Dashboard from '../components/Dashboard/Dashboard';
+import OauthDashboard from '../components/Dashboard/OauthDashboard';
 import Users from '../components/Users';
 import CreateUpdateUser from '../components/CreateUpdateUser';
 import CreateUpdateEvent from '../components/CreateUpdateEvent';
@@ -16,7 +17,8 @@ class Routes extends Component {
 
     return (
       <React.Fragment>
-        <Route exact path='/' component={Dashboard}/>
+        <Route exact path='/' component={OauthDashboard}/>
+        <Route exact path='/events' component={Dashboard}/>
         <Route exact path='/users' component={Users}/>
         <Route exact path='/export-attendees' component={ExportAttendees}/>
         <Route exact path='/user/change-password' component={ChangePassword}/>

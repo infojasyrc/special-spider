@@ -62,14 +62,14 @@ export const styles = theme => ({
     }
   },
   button: {
-    marginTop: '2em'
+    margin: theme.spacing.unit,
   },
   loginLogo: {
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center center',
     width: '100%',
     height: '4em',
-    backgroundColor: theme.colors.orange,
+    backgroundColor: theme.colors.transparentBlack,
     backgroundSize: '12em auto',
     padding: '1em 0',
     marginBottom: '1.5em'

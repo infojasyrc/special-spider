@@ -1,6 +1,7 @@
 import {createMuiTheme} from '@material-ui/core/styles';
 
 const colors = {
+  black: '#000000',
   orange: '#ff6d00',
   orangeTransparent: '#ff6d007d',
   lightOrange: '#f89937',
@@ -25,7 +26,7 @@ export const theme = createMuiTheme({
   colors: colors,
   palette: {
     primary: {
-      main: colors.orange,
+      main: colors.black,
       contrastText: colors.white
     },
     secondary: {
@@ -34,6 +35,19 @@ export const theme = createMuiTheme({
     }
   },
   typography: {
+    // Use the system font instead of the default Roboto font.
+    fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
     useNextVariants: true
   },
   mainContainer: {

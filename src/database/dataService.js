@@ -5,49 +5,30 @@ export default class DataService {
   }
 
   getAll = () => {
-    return this
-      .db[this.storeName]
-      .toArray();
+    return this.db[this.storeName].toArray();
   }
 
   getById = (id) => {
-    return this
-      .db[this.storeName]
-      .get(id);
+    return this.db[this.storeName].get(id);
   }
 
   getByKey = (key, value) => {
-    return this
-      .db[this.storeName]
-      .where(key)
-      .equals(value);
+    return this.db[this.storeName].where(key).equals(value);
   }
 
   countByKey = (key, value) => {
-    return this
-      .db[this.storeName]
-      .where(key)
-      .equals(value)
-      .count();
+    return this.db[this.storeName].where(key).equals(value).count();
   }
 
   add = (data) => {
-    return this
-      .db[this.storeName]
-      .add(data);
+    return this.db[this.storeName].add(data);
   }
 
   deleteAll = () => {
-    return this
-      .db[this.storeName]
-      .clear();
+    return this.db[this.storeName].clear();
   }
 
   delete = (id) => {
-    return this
-      .db[this.storeName]
-      .where('id')
-      .equals(id)
-      .delete();
+    return this.db[this.storeName].where('id').equals(id).delete();
   }
 }

@@ -1,0 +1,17 @@
+{
+  "projects": {
+    "default": "spider-node-app"
+  },
+  "targets": {
+    "spider-node-app": {
+      "hosting" : {
+        "prod": [
+          "spider-web-prod"
+        ],
+        "dev": [
+          "spider-web-dev"
+        ]
+      }
+    }
+  }
+}

@@ -1,4 +1,9 @@
+import * as firebase from 'firebase/firebase';
+
 import baseRequest from './baseRequest';
+import firebaseConfig from '../environment/environment';
+
+firebase.initializeApp(firebaseConfig);
 
 export default class Security extends baseRequest {
   constructor() {
@@ -8,10 +13,11 @@ export default class Security extends baseRequest {
   }
 
   login = (credentials) => {
-    return this.post(this.loginMethod, credentials);
+    // returns a UserCredential object
+    return firebase.auth().signInWithEmailAndPassword(credentials.email, credentials.password);
   }
 
   logout = () => {
-    return this.post(this.logoutMethod);
+    return firebase.auth().signOut();
   }
 }

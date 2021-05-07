@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import { List } from '@material-ui/core';
 import AccountCircleIcon from '@material-ui/icons/AccountCircleRounded';
-import DownloadIcon from '@material-ui/icons/CloudDownload';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 
 import LeftMenuOption from './../LeftMenuOption/LeftMenuOption';
@@ -18,11 +17,6 @@ class LeftMenu extends Component {
           path="/users"
           title="Users"
           iconComponent={<AccountCircleIcon/>}
-        />
-        <LeftMenuOption
-          path="/export-attendees"
-          title="Export Attendees"
-          iconComponent={<DownloadIcon/>}
         />
       </React.Fragment>;
     }

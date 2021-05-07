@@ -3,11 +3,14 @@ import ReactDOM from 'react-dom';
 import 'typeface-roboto';
 import 'typeface-exo';
 import {BrowserRouter} from 'react-router-dom';
+import dotenv from 'dotenv';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 const root = document.getElementById('root');
+
+dotenv.config({ path: './.env' });
 
 ReactDOM.render(
   <BrowserRouter>

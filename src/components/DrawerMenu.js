@@ -55,7 +55,7 @@ class DrawerMenu extends Component {
   render() {
     const {classes, open, userContext, onClose} = this.props;
     const {fullName, role, isAdmin} = userContext.user;
-    console.log('user context', userContext.user);
+
     if (!userContext.isLoggedIn) {
       return null;
     }

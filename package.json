@@ -3,32 +3,38 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^3.9.2",
-    "@material-ui/icons": "latest",
-    "axios": "^0.18.1",
-    "dexie": "^2.0.4",
+    "@material-ui/core": "^4.11.4",
+    "@material-ui/icons": "^4.11.2",
+    "axios": "^0.21.1",
+    "dexie": "^3.0.3",
+    "dotenv": "^9.0.0",
     "file-saver": "^2.0.1",
+    "firebase": "^8.5.0",
     "moment": "^2.24.0",
-    "react": "^16.8.3",
-    "react-dom": "^16.8.3",
-    "react-router-dom": "^4.3.1",
-    "react-scripts": "^3.2.0",
-    "typeface-exo": "0.0.61",
-    "typeface-roboto": "0.0.54"
+    "query-string": "^7.0.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "^4.0.3",
+    "typeface-exo": "1.1.13",
+    "typeface-roboto": "1.1.13"
   },
   "devDependencies": {
     "sw-precache": "^5.2.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "dev": "export HTTPS=true && PORT=3000 react-scripts start",
+    "start": "cp .env.development .env && react-scripts start",
+    "start:ssl": "cp .env.development .env && export HTTPS=true && PORT=3000 react-scripts start",
     "build": "react-scripts build && sw-precache --config=sw-precache-config.js",
-    "build-major": "node update-version major && react-scripts build && sw-precache --config=sw-precache-config.js",
-    "build-minor": "node update-version minor && react-scripts build && sw-precache --config=sw-precache-config.js",
-    "build-patch": "node update-version patch && react-scripts build && sw-precache --config=sw-precache-config.js",
+    "build:dev": "cp .env.development .env && react-scripts build && sw-precache --config=sw-precache-config.js",
+    "build:prod": "cp .env.production .env && react-scripts build && sw-precache --config=sw-precache-config.js",
+    "build:major": "node update-version major && react-scripts build && sw-precache --config=sw-precache-config.js",
+    "build:minor": "node update-version minor && react-scripts build && sw-precache --config=sw-precache-config.js",
+    "build:patch": "node update-version patch && react-scripts build && sw-precache --config=sw-precache-config.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy-dev": "npm run build && firebase deploy --only hosting:dev"
+    "deploy:dev": "npm run build:dev && firebase deploy --only hosting:dev",
+    "deploy:prod": "npm run build:prod && firebase deploy --only hosting:prod"
   },
   "eslintConfig": {
     "extends": "react-app"
