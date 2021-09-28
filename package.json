@@ -23,7 +23,8 @@
     "sw-precache": "^5.2.1"
   },
   "scripts": {
-    "start": "cp .env.development .env && react-scripts start",
+    "start:development": "cp .env.development .env && react-scripts start",
+    "start": "react-scripts start",
     "start:ssl": "cp .env.development .env && export HTTPS=true && PORT=3000 react-scripts start",
     "build": "react-scripts build && sw-precache --config=sw-precache-config.js",
     "build:dev": "cp .env.development .env && react-scripts build && sw-precache --config=sw-precache-config.js",
