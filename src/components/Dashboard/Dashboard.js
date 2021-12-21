@@ -12,8 +12,8 @@ import {ActionsContext} from '../../contexts/ActionsContext';
 import {withMessage} from '../../hocs/Snackbar';
 
 import Loading from '../Loading';
-import EventCard from '../EventCard';
-import Events from '../../api/events';
+// import EventCard from '../EventCard';
+import EventList from '../EventList/EventList';
 import NavigationWrapper from '../NavigationWrapper';
 import {sortDescending, sortAscending} from '../../tools';
 import {withUserContext} from '../../hocs/UserContext';
@@ -24,6 +24,8 @@ import DashboardFilters from './DashboardFilters';
 
 import database from '../../database/database';
 import DataService from '../../database/dataService';
+
+import Events from '../../api/events';
 
 import {styles} from '../../styles/Dashboard';
 
@@ -233,21 +235,23 @@ class Dashboard extends Component {
 
   renderEvents = () => {
     const {events} = this.state;
-    const {classes} = this.props;
 
-    if (!events || events.length === 0) {
-      return <h4 className={classes.noResults}>No results found for the selected year and headquarter</h4>;
-    }
-
-    return events.map((event, index) => {
-      return (<EventCard
-        event={event}
-        key={index}
-        onOpen={this.handleOpenClicked}
-        onPause={this.handlePauseClicked}
-        onClose={this.handleCloseClicked}
-        onSelectedEvent={this.handleSelectedEvent}/>);
-    });
+    // return events.map((event, index) => {
+    //   return (<EventCard
+    //     event={event}
+    //     key={index}
+    //     onOpen={this.handleOpenClicked}
+    //     onPause={this.handlePauseClicked}
+    //     onClose={this.handleCloseClicked}
+    //     onSelectedEvent={this.handleSelectedEvent}/>);
+    // });
+    return <EventList
+      events={events}
+      onOpen={this.handleOpenClicked}
+      onPause={this.handlePauseClicked}
+      onClose={this.handleCloseClicked}
+      onSelected={this.handleSelectedEvent}
+    />
   }
 
   renderContent = () => {
@@ -313,7 +317,7 @@ class Dashboard extends Component {
       <FullLayout title="Special Spider App">
         <h1 className={classes.title}>Events</h1>
         <h1 className={classes.title}>Accounts</h1>
-        {/*this.renderContent()*/}
+        {this.renderContent()}
         {this.renderAddButton()}
         {/*this.renderPreviewEvent()*/}
       </FullLayout>

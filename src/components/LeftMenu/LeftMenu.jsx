@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import { List } from '@material-ui/core';
+
 import AccountCircleIcon from '@material-ui/icons/AccountCircleRounded';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 
-import LeftMenuOption from './../LeftMenuOption/LeftMenuOption';
+import LeftMenuOption from '../LeftMenuOption/LeftMenuOption';
 
 class LeftMenu extends Component {
   render() {
@@ -27,6 +28,11 @@ class LeftMenu extends Component {
           path="/user/change-password"
           title="Change Password"
           iconComponent={<VpnKeyIcon/>}
+        />
+        <LeftMenuOption
+          path="/events"
+          title="Events"
+          iconComponent=""
         />
         {adminOptions}
       </List>
