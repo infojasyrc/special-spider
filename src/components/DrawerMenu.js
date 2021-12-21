@@ -14,7 +14,7 @@ import LogoutIcon from '@material-ui/icons/ExitToAppRounded';
 
 import SecurityApi from '../api/security';
 
-import LeftMenu from './../components/LeftMenu/LeftMenu';
+import LeftMenu from './../components/LeftMenu/LeftMenu.jsx';
 import {withUserContext} from '../hocs/UserContext';
 import {withMessage} from '../hocs/Snackbar';
 import {styles} from '../styles/DrawerMenu';
