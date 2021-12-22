@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
-import Layout from './components/Layout';
-import LayoutProvider from './providers/LayoutProvider';
-import ThemeProvider from './providers/ThemeProvider';
-import ActionsProvider from './providers/ActionsProvider';
-import UserProvider from './providers/UserProvider';
-import Routes from './routes/Routes';
+import React, { Component } from 'react'
+import Layout from './components/Layout'
+import LayoutProvider from './providers/LayoutProvider'
+import ThemeProvider from './providers/ThemeProvider'
+import ActionsProvider from './providers/ActionsProvider'
+import UserProvider from './providers/UserProvider'
+import Routes from './routes/Routes'
 
 class App extends Component {
   render() {
@@ -14,14 +14,14 @@ class App extends Component {
           <ActionsProvider>
             <LayoutProvider>
               <Layout>
-                <Routes/>
+                <Routes />
               </Layout>
             </LayoutProvider>
           </ActionsProvider>
         </UserProvider>
       </ThemeProvider>
-    );
+    )
   }
 }
 
-export default App;
+export default App

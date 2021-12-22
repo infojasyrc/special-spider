@@ -1,25 +1,27 @@
-import React, {Component} from 'react';
-import { List } from '@material-ui/core';
+import React, { Component } from 'react'
+import { List } from '@material-ui/core'
 
-import AccountCircleIcon from '@material-ui/icons/AccountCircleRounded';
-import VpnKeyIcon from '@material-ui/icons/VpnKey';
+import AccountCircleIcon from '@material-ui/icons/AccountCircleRounded'
+import VpnKeyIcon from '@material-ui/icons/VpnKey'
 
-import LeftMenuOption from '../LeftMenuOption/LeftMenuOption';
+import LeftMenuOption from '../LeftMenuOption/LeftMenuOption'
 
 class LeftMenu extends Component {
   render() {
-    const {userContext} = this.props;
-    const {isAdmin} = userContext.user;
-    let adminOptions = null;
+    const { userContext } = this.props
+    const { isAdmin } = userContext.user
+    let adminOptions = null
 
     if (isAdmin) {
-      adminOptions = <React.Fragment>
-        <LeftMenuOption
-          path="/users"
-          title="Users"
-          iconComponent={<AccountCircleIcon/>}
-        />
-      </React.Fragment>;
+      adminOptions = (
+        <React.Fragment>
+          <LeftMenuOption
+            path="/users"
+            title="Users"
+            iconComponent={<AccountCircleIcon />}
+          />
+        </React.Fragment>
+      )
     }
 
     return (
@@ -27,17 +29,13 @@ class LeftMenu extends Component {
         <LeftMenuOption
           path="/user/change-password"
           title="Change Password"
-          iconComponent={<VpnKeyIcon/>}
+          iconComponent={<VpnKeyIcon />}
         />
-        <LeftMenuOption
-          path="/events"
-          title="Events"
-          iconComponent=""
-        />
+        <LeftMenuOption path="/events" title="Events" iconComponent="" />
         {adminOptions}
       </List>
-    );
+    )
   }
 }
 
-export default LeftMenu;
+export default LeftMenu
