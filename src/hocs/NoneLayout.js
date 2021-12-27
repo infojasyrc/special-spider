@@ -1,21 +1,17 @@
-import React, {Component} from 'react';
-import {LayoutContext, LayoutTypes} from '../contexts/LayoutContext';
+import React, { Component } from 'react'
+import LayoutContext, { LayoutTypes } from '../shared/contexts/Layout'
 
 class NoneLayout extends Component {
   componentDidMount() {
-    const {change} = this.context;
-    change(LayoutTypes.NONE);
+    const { changeLayout } = this.context
+    changeLayout(LayoutTypes.NONE)
   }
 
   render() {
-    const {children} = this.props;
-    return (
-      <React.Fragment>
-        {children}
-      </React.Fragment>
-    );
+    const { children } = this.props
+    return <React.Fragment>{children}</React.Fragment>
   }
 }
-NoneLayout.contextType = LayoutContext;
+NoneLayout.contextType = LayoutContext
 
-export default NoneLayout;
+export default NoneLayout

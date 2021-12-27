@@ -1,81 +1,79 @@
-import React, {Component} from 'react';
-import {withStyles} from '@material-ui/core/styles';
-import {Paper} from '@material-ui/core';
+import React, { Component } from 'react'
+import { withStyles } from '@material-ui/core/styles'
+import { Paper } from '@material-ui/core'
 
-import {styles} from '../styles/Layout';
+import { styles } from '../styles/Layout'
 
-import {withUserContext} from '../hocs/UserContext';
-import {LayoutTypes, LayoutContext} from '../contexts/LayoutContext';
-import FullAppBar from './FullAppBar';
-import NavigationBar from './NavigationBar';
-import Login from './Login';
+import { withUserContext } from '../hocs/UserContext'
+import LayoutContext, { LayoutTypes } from '../shared/contexts/Layout'
+import FullAppBar from './FullAppBar'
+import NavigationBar from './NavigationBar'
+import Login from './Login'
 
 class Layout extends Component {
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
-      showDrawer: false
-    };
+      showDrawer: false,
+    }
   }
 
   renderAppBarWithDrawer = () => {
-    const {title} = this.context;
-    return (<FullAppBar title={title}/>);
+    const { title } = this.context
+    return <FullAppBar title={title} />
   }
 
   renderNavigationBar = () => {
-    const {title, showLogo} = this.context;
-    return (<NavigationBar title={title} showLogo={showLogo}/>);
+    const { title, showLogo } = this.context
+    return <NavigationBar title={title} showLogo={showLogo} />
   }
 
   renderLayout = () => {
-    let barLayout = null;
-    const {type: layout} = this.context;
+    let barLayout = null
+    const { layout } = this.context
 
     if (layout === LayoutTypes.FULL) {
-      barLayout = this.renderAppBarWithDrawer();
+      barLayout = this.renderAppBarWithDrawer()
     }
 
     if (layout === LayoutTypes.NAVIGATION) {
-      barLayout = this.renderNavigationBar();
+      barLayout = this.renderNavigationBar()
     }
 
-    return barLayout;
+    return barLayout
   }
 
   render() {
-    const {children, classes, userContext} = this.props;
-    const classNames = [classes.innerContainer];
-    const {type} = this.context;
+    const { children, classes, userContext } = this.props
+    const classNames = [classes.innerContainer]
+    const { layout } = this.context
 
-    if (type === LayoutTypes.NONE) {
-      classNames.push(classes.full);
+    if (layout === LayoutTypes.NONE) {
+      classNames.push(classes.full)
     }
 
     if (!userContext.isLoggedIn) {
       return (
         <Paper className={classes.mainContainer}>
           <div className={classNames.join(' ')}>
-            <Login/>
+            <Login />
           </div>
         </Paper>
-      );
+      )
     }
 
     return (
       <React.Fragment>
         {this.renderLayout()}
         <Paper className={classes.mainContainer}>
-          <div className={classNames.join(' ')}>
-            {children}
-          </div>
+          <div className={classNames.join(' ')}>{children}</div>
         </Paper>
       </React.Fragment>
-    );
+    )
   }
 }
 
-Layout.contextType = LayoutContext;
+Layout.contextType = LayoutContext
 
-export default withUserContext(withStyles(styles)(Layout));
+export default withUserContext(withStyles(styles)(Layout))

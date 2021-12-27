@@ -1,23 +1,19 @@
-import React, {Component} from 'react';
-import {LayoutContext, LayoutTypes} from '../contexts/LayoutContext';
+import React, { Component } from 'react'
+import LayoutContext, { LayoutTypes } from '../shared/contexts/Layout'
 
 class FullLayout extends Component {
   componentDidMount() {
-    const {change} = this.context;
-    const {title} = this.props;
-    change(LayoutTypes.FULL, title);
+    const { changeLayout } = this.context
+    const { title } = this.props
+    changeLayout(LayoutTypes.FULL, title)
   }
 
   render() {
-    const {children} = this.props;
-    return (
-      <React.Fragment>
-        {children}
-      </React.Fragment>
-    );
+    const { children } = this.props
+    return <React.Fragment>{children}</React.Fragment>
   }
 }
 
-FullLayout.contextType = LayoutContext;
+FullLayout.contextType = LayoutContext
 
-export default FullLayout;
+export default FullLayout

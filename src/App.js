@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import Layout from './components/Layout'
-import LayoutProvider from './providers/LayoutProvider'
 import ThemeProvider from './providers/ThemeProvider'
 import ActionsProvider from './providers/ActionsProvider'
 import UserProvider from './providers/UserProvider'
 import Routes from './routes/Routes'
+
+import { LayoutProvider } from './shared/contexts/Layout'
 
 class App extends Component {
   render() {

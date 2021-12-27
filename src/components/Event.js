@@ -1,24 +1,24 @@
-import React, {Component} from 'react';
-import {withRouter} from 'react-router-dom';
+import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
 
-import {withStyles, Button} from '@material-ui/core';
+import { withStyles, Button } from '@material-ui/core'
 
-import {LayoutContext} from '../contexts/LayoutContext';
-import NoneLayout from '../hocs/NoneLayout';
-import EventsApi from '../api/events';
-import Loading from './Loading';
-import Slider from './Slider';
-import {withMessage} from '../hocs/Snackbar';
+import LayoutContext from '../shared/contexts/Layout'
+import NoneLayout from '../hocs/NoneLayout'
+import EventsApi from '../api/events'
+import Loading from './Loading'
+import Slider from './Slider'
+import { withMessage } from '../hocs/Snackbar'
 
-const styles = theme => ({
+const styles = (theme) => ({
   container: {
     overflow: 'hidden',
     width: '100%',
-    height: '100%'
+    height: '100%',
   },
   image: {
     width: '100%',
-    height: '100%'
+    height: '100%',
   },
   exitButton: {
     position: 'absolute',
@@ -26,72 +26,85 @@ const styles = theme => ({
     top: 0,
     left: '5%',
     height: '3em',
-    zIndex: 3
-  }
-});
+    zIndex: 3,
+  },
+})
 
 class Event extends Component {
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
-      event: null
-    };
+      event: null,
+    }
 
-    this.api = new EventsApi();
+    this.api = new EventsApi()
   }
 
   componentDidMount = () => {
-    const {match, showLoading, hideMessage} = this.props;
-    const id = match.params.id;
+    const { match, showLoading, hideMessage } = this.props
+    const id = match.params.id
 
-    showLoading();
+    showLoading()
 
-    this.api.getById(id)
-      .then(event => {
-        this.setState({
-          event: event
-        }, () => {
-          hideMessage();
-        });
+    this.api
+      .getById(id)
+      .then((event) => {
+        this.setState(
+          {
+            event: event,
+          },
+          () => {
+            hideMessage()
+          }
+        )
       })
-      .catch(error => {
-        console.error(error);
-        hideMessage();
-      });
+      .catch((error) => {
+        console.error(error)
+        hideMessage()
+      })
   }
 
   handleFormClicked = () => {
-    const {history, match} = this.props;
-    history.push(`/add-attendee/${match.params.id}`);
+    const { history, match } = this.props
+    history.push(`/add-attendee/${match.params.id}`)
   }
 
   handleBackClicked = () => {
-    const {history} = this.props;
-    history.push('/');
+    const { history } = this.props
+    history.push('/')
   }
 
   renderContent = (event) => {
-    const {classes} = this.props;
+    const { classes } = this.props
 
     return (
       <div className={classes.container}>
-        <img className={classes.image} src={event.images[0].url} alt={event.name}/>
+        <img
+          className={classes.image}
+          src={event.images[0].url}
+          alt={event.name}
+        />
       </div>
-    );
+    )
   }
 
   render() {
-    const {event} = this.state;
-    const {classes} = this.props;
+    const { event } = this.state
+    const { classes } = this.props
 
     if (!event) {
       return (
         <NoneLayout>
-          <Loading isLoading={true}/>
-          <Button className={classes.exitButton} onClick={this.handleBackClicked}>{''}</Button>
+          <Loading isLoading={true} />
+          <Button
+            className={classes.exitButton}
+            onClick={this.handleBackClicked}
+          >
+            {''}
+          </Button>
         </NoneLayout>
-      );
+      )
     }
 
     return (
@@ -99,12 +112,15 @@ class Event extends Component {
         <Slider
           images={event.images}
           startPaused={false}
-          onFormClicked={this.handleFormClicked}/>
-        <Button className={classes.exitButton} onClick={this.handleBackClicked}>{''}</Button>
+          onFormClicked={this.handleFormClicked}
+        />
+        <Button className={classes.exitButton} onClick={this.handleBackClicked}>
+          {''}
+        </Button>
       </NoneLayout>
-    );
+    )
   }
 }
-Event.contextType = LayoutContext;
+Event.contextType = LayoutContext
 
-export default withMessage(withRouter(withStyles(styles)(Event)));
+export default withMessage(withRouter(withStyles(styles)(Event)))
