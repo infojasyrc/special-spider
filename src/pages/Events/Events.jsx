@@ -11,16 +11,16 @@ import FullLayout from '../../hocs/FullLayout';
 import {ActionsContext} from '../../contexts/ActionsContext';
 import {withMessage} from '../../hocs/Snackbar';
 
-import Loading from '../Loading';
+import Loading from '../../components/Loading';
 // import EventCard from '../EventCard';
-import EventList from '../EventList/EventList';
-import NavigationWrapper from '../NavigationWrapper';
+import EventList from '../../components/EventList/EventList';
+import NavigationWrapper from '../../components/Navigation/NavigationWrapper';
 import {sortDescending, sortAscending} from '../../tools';
 import {withUserContext} from '../../hocs/UserContext';
 
-import PreviewEvent from '../PreviewEvent';
-import Headquarters from './Headquarters';
-import DashboardFilters from './DashboardFilters';
+import PreviewEvent from '../../components/PreviewEvent';
+import Headquarters from '../../components/Dashboard/Headquarters';
+import DashboardFilters from '../../components/Dashboard/DashboardFilters';
 
 import database from '../../database/database';
 import DataService from '../../database/dataService';
@@ -29,7 +29,7 @@ import Events from '../../api/events';
 
 import {styles} from '../../styles/Dashboard';
 
-class Dashboard extends Component {
+class EventsPage extends Component {
   constructor(props) {
     super(props);
 
@@ -325,6 +325,6 @@ class Dashboard extends Component {
   }
 }
 
-Dashboard.contextType = ActionsContext;
+EventsPage.contextType = ActionsContext;
 
-export default withMessage(withUserContext(withRouter(withStyles(styles)(Dashboard))));
+export default withMessage(withUserContext(withRouter(withStyles(styles)(EventsPage))));
