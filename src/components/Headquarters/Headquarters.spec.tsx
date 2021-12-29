@@ -16,6 +16,7 @@ describe('headquarters component', () => {
     const props: HeadquartersProps = {
       allHeadquarters: [],
       loading: true,
+      onChangeHeadquarter: jest.fn(),
     }
     renderComponent(props)
     expect(screen.getByText(/loading hqs/i)).toBeInTheDocument()
@@ -25,6 +26,7 @@ describe('headquarters component', () => {
     const props: HeadquartersProps = {
       allHeadquarters: [],
       loading: false,
+      onChangeHeadquarter: jest.fn(),
     }
     renderComponent(props)
     const element = screen.getByRole('button')
@@ -32,12 +34,14 @@ describe('headquarters component', () => {
   })
 
   it('should render with elements changing headquarter', () => {
+    const mockOnChange = jest.fn()
     const props: HeadquartersProps = {
       loading: false,
       allHeadquarters: [
         { id: '01', name: 'Lima' },
         { id: '02', name: 'Buenos Aires' },
       ],
+      onChangeHeadquarter: mockOnChange
     }
     renderComponent(props)
     const element = screen.getByRole('button')
@@ -46,6 +50,8 @@ describe('headquarters component', () => {
     fireEvent.click(listbox.getByText(/lima/i))
     waitFor(() => {
       expect(screen.getByRole('button')).toHaveTextContent(/lima/i)
+      expect(mockOnChange).toHaveBeenCalled()
+      expect(mockOnChange).toHaveBeenCalledTimes(1)
     })
   })
 
@@ -57,6 +63,7 @@ describe('headquarters component', () => {
       ],
       selectedHeadquarter: '02',
       loading: false,
+      onChangeHeadquarter: jest.fn(),
     }
     renderComponent(props)
     const element = screen.getByRole('button')

@@ -19,12 +19,14 @@ const useStyles = makeStyles(() =>
 export interface HeadquartersProps {
   loading: boolean
   allHeadquarters: Headquarter[]
-  selectedHeadquarter?: string
+  selectedHeadquarter?: string,
+  onChangeHeadquarter: (headquarter: string) => {},
 }
 
 export default function Headquarters({
   loading,
   allHeadquarters,
+  onChangeHeadquarter,
   selectedHeadquarter = '-1',
 }: HeadquartersProps): JSX.Element {
   const classes = useStyles()
@@ -33,6 +35,7 @@ export default function Headquarters({
     e: React.ChangeEvent<{ value: unknown }>
   ) => {
     selectedHeadquarter = e.currentTarget.value as string
+    onChangeHeadquarter(e.currentTarget.value as string)
   }
 
   if (loading) {

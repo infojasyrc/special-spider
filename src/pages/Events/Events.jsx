@@ -1,39 +1,37 @@
-import React, {Component} from 'react';
-import {withRouter} from 'react-router-dom';
-import {
-  Grid,
-  withStyles,
-  Fab
-} from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
+import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
+import { Grid, withStyles, Fab } from '@material-ui/core'
+import AddIcon from '@material-ui/icons/Add'
 
-import FullLayout from '../../hocs/FullLayout';
-import {ActionsContext} from '../../contexts/ActionsContext';
-import {withMessage} from '../../hocs/Snackbar';
+import FullLayout from '../../hocs/FullLayout'
+import { ActionsContext } from '../../contexts/ActionsContext'
+import { withMessage } from '../../hocs/Snackbar'
 
-import Loading from '../../components/Loading';
+import Loading from '../../components/Loading'
 // import EventCard from '../EventCard';
-import EventList from '../../components/EventList/EventList';
-import NavigationWrapper from '../../components/Navigation/NavigationWrapper';
-import {sortDescending, sortAscending} from '../../tools';
-import {withUserContext} from '../../hocs/UserContext';
+import EventList from '../../components/EventList/EventList'
+import NavigationWrapper from '../../components/Navigation/NavigationWrapper'
+import { sortDescending, sortAscending } from '../../tools'
+import { withUserContext } from '../../hocs/UserContext'
 
-import PreviewEvent from '../../components/PreviewEvent';
-import Headquarters from '../../components/Dashboard/Headquarters';
-import DashboardFilters from '../../components/Dashboard/DashboardFilters';
+import PreviewEvent from '../../components/PreviewEvent'
+import Headquarters from '../../components/Headquarters/Headquarters'
+import DashboardFilters from '../../components/Dashboard/DashboardFilters'
 
-import database from '../../database/database';
-import DataService from '../../database/dataService';
+import database from '../../database/database'
+import DataService from '../../database/dataService'
 
-import Events from '../../api/events';
+import Events from '../../api/events'
+import HeadquartersApi from '../../api/headquarters'
 
-import {styles} from '../../styles/Dashboard';
+import { styles } from '../../styles/Dashboard'
 
 class EventsPage extends Component {
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
+      allHeadquarters: [],
       filter: null,
       events: null,
       selectedYear: null,
@@ -41,200 +39,274 @@ class EventsPage extends Component {
       selectedEvent: null,
       sortBy: null,
       loading: false,
-      error: null
-    };
+      error: null,
+      loadingHeadquarters: true,
+    }
 
-    this.api = new Events();
-    this.db = new DataService(database, 'attendees');
+    this.api = new Events()
+    this.apiHeadquarters = new HeadquartersApi()
+    this.db = new DataService(database, 'attendees')
+  }
+
+  fetchHeadquarters = () => {
+    this.apiHeadquarters
+      .getAll()
+      .then((headquarters) => {
+        this.setState({
+          allHeadquarters: headquarters,
+        })
+      })
+      .catch((error) => {
+        console.log('Error retrieving all headquarters')
+        console.error(error)
+      })
+      .finally(() => {
+        this.setState({
+          loadingHeadquarters: false,
+        })
+      })
+  }
+
+  componentDidMount() {
+    this.fetchHeadquarters()
+    this.fetchEvents()
   }
 
   fetchEvents = () => {
-    const {selectedYear, selectedHeadquarter, selectedEvent} = this.state;
-    const {showLoading, hideMessage, userContext} = this.props;
+    const { selectedYear, selectedHeadquarter, selectedEvent } = this.state
+    const { showLoading, hideMessage, userContext } = this.props
 
     if (!selectedYear || !selectedHeadquarter) {
-      return;
+      return
     }
 
-    showLoading();
+    showLoading()
 
-    this.api.getAll(selectedYear, selectedHeadquarter, userContext.user.isAdmin)
-      .then(events => {
-        let newSelectedEvent = null;
+    this.api
+      .getAll(selectedYear, selectedHeadquarter, userContext.user.isAdmin)
+      .then((events) => {
+        let newSelectedEvent = null
 
         if (selectedEvent) {
-          const index = events.findIndex(event => {
-            return event.id === selectedEvent.id;
-          });
+          const index = events.findIndex((event) => {
+            return event.id === selectedEvent.id
+          })
 
-          newSelectedEvent = index > 0 ? events[index] : null;
+          newSelectedEvent = index > 0 ? events[index] : null
         }
 
-        this.setState({
-          events: this.sortByDate(events),
-          selectedEvent: newSelectedEvent,
-          loading: false,
-          error: null
-        }, () => {
-          hideMessage();
-        })
+        this.setState(
+          {
+            events: this.sortByDate(events),
+            selectedEvent: newSelectedEvent,
+            loading: false,
+            error: null,
+          },
+          () => {
+            hideMessage()
+          }
+        )
       })
-      .catch(error => {
-        this.setState({loading: false});
-        hideMessage();
-        console.error(error);
-      });
+      .catch((error) => {
+        this.setState({ loading: false })
+        hideMessage()
+        console.error(error)
+      })
   }
 
   sortByDate = (events) => {
-    const {sortBy} = this.state;
+    const { sortBy } = this.state
 
     if (!events) {
-      return;
+      return
     }
 
     if (sortBy === 'newest') {
-      return events.sort(sortDescending);
+      return events.sort(sortDescending)
     }
 
-    return events.sort(sortAscending);
+    return events.sort(sortAscending)
   }
 
-  handleHeadquarterChanged = selectedHeadquarter => {
-    this.setState({selectedHeadquarter: selectedHeadquarter}, () => {this.fetchEvents()});
+  handleHeadquarterChanged = (selectedHeadquarter) => {
+    this.props.userContext.selectHeadquarter(selectedHeadquarter)
+    this.setState({ selectedHeadquarter: selectedHeadquarter }, () => {
+      this.fetchEvents()
+    })
   }
 
-  handleFiltersChanged = filters => {
-    this.setState({sortBy: filters.sortBy, selectedYear: filters.year}, () => {this.fetchEvents()});
+  handleFiltersChanged = (filters) => {
+    this.setState(
+      { sortBy: filters.sortBy, selectedYear: filters.year },
+      () => {
+        this.fetchEvents()
+      }
+    )
   }
 
   handleSelectedEvent = (event) => {
-    this.setState({selectedEvent: event});
+    this.setState({ selectedEvent: event })
   }
   // TODO: This function should be moved to a specific component for preview event
   handleOpenClicked = (id) => {
-    this.setState({isLoading: true});
+    this.setState({ isLoading: true })
 
-    this.api.open(id)
+    this.api
+      .open(id)
       .then(() => {
-        this.setState({
-          isLoading: false
-        }, () => {
-          this.fetchEvents();
-        });
+        this.setState(
+          {
+            isLoading: false,
+          },
+          () => {
+            this.fetchEvents()
+          }
+        )
       })
-      .catch(error => {
-        console.error(error);
-        this.setState({isLoading: false});
-      });
+      .catch((error) => {
+        console.error(error)
+        this.setState({ isLoading: false })
+      })
   }
   // TODO: This function should be moved to a specific component for preview event
   handlePauseClicked = (id) => {
-    this.setState({isLoading: true});
+    this.setState({ isLoading: true })
 
-    this.api.pause(id)
+    this.api
+      .pause(id)
       .then(() => {
-        this.setState({
-          isLoading: false
-        }, () => {
-          this.fetchEvents();
-        });
+        this.setState(
+          {
+            isLoading: false,
+          },
+          () => {
+            this.fetchEvents()
+          }
+        )
       })
-      .catch(error => {
-        console.error(error);
-        this.setState({isLoading: false});
-      });
+      .catch((error) => {
+        console.error(error)
+        this.setState({ isLoading: false })
+      })
   }
   // TODO: This function should be moved to a specific component for preview event
   handleCloseClicked = (id) => {
-    this.setState({isLoading: true});
+    this.setState({ isLoading: true })
 
-    this.api.close(id)
+    this.api
+      .close(id)
       .then(() => {
-        this.setState({
-          isLoading: false
-        }, () => {
-          this.fetchEvents();
-        });
+        this.setState(
+          {
+            isLoading: false,
+          },
+          () => {
+            this.fetchEvents()
+          }
+        )
       })
-      .catch(error => {
-        console.error(error);
-        this.setState({isLoading: false});
-      });
+      .catch((error) => {
+        console.error(error)
+        this.setState({ isLoading: false })
+      })
   }
   // TODO: This function should be moved to a specific component for preview event
   handleEnterClicked = (id) => {
-    const {history} = this.props;
-    this.setState({selectedEvent: null});
-    history.push(`/play-event/${id}`);
+    const { history } = this.props
+    this.setState({ selectedEvent: null })
+    history.push(`/play-event/${id}`)
   }
 
   handlePreviewClosed = () => {
-    this.setState({selectedEvent: null});
+    this.setState({ selectedEvent: null })
   }
 
   handleSynchronizeClicked = (idEvent) => {
-    const {showMessage, hideMessage} = this.props;
+    const { showMessage, hideMessage } = this.props
 
-    showMessage('Uploading attendees');
+    showMessage('Uploading attendees')
 
-    this.setState({isLoading: true});
-    this.db.getByKey('idEvent', idEvent).toArray()
-      .then(attendees => {
-        this.api.addAttendees(idEvent, attendees)
+    this.setState({ isLoading: true })
+    this.db
+      .getByKey('idEvent', idEvent)
+      .toArray()
+      .then((attendees) => {
+        this.api
+          .addAttendees(idEvent, attendees)
           .then(() => {
-            attendees.forEach(attendee => {
-              this.db.delete(attendee.id)
+            attendees.forEach((attendee) => {
+              this.db
+                .delete(attendee.id)
                 .then(() => {
-                  this.setState({
-                    isLoading: false,
-                    activeStep: 2
-                  }, () => {
-                    hideMessage();
-                  });
+                  this.setState(
+                    {
+                      isLoading: false,
+                      activeStep: 2,
+                    },
+                    () => {
+                      hideMessage()
+                    }
+                  )
                 })
-                .catch(error => {
-                  console.error('Error while deleting attendee from IndexedDb', error);
-                  this.setState({
-                    isLoading: false
-                  }, () => {
-                    hideMessage();
-                  });
-                });
-            });
+                .catch((error) => {
+                  console.error(
+                    'Error while deleting attendee from IndexedDb',
+                    error
+                  )
+                  this.setState(
+                    {
+                      isLoading: false,
+                    },
+                    () => {
+                      hideMessage()
+                    }
+                  )
+                })
+            })
           })
-          .catch(error => {
-            console.error('Error while uploading attendee to server', error);
-            this.setState({
-              isLoading: false
-            }, () => {
-              hideMessage();
-            });
-          });
+          .catch((error) => {
+            console.error('Error while uploading attendee to server', error)
+            this.setState(
+              {
+                isLoading: false,
+              },
+              () => {
+                hideMessage()
+              }
+            )
+          })
       })
-      .catch(error => {
-        console.error('Error while reading attendees from IndexedDb', error);
-        this.setState({
-          isLoading: false
-        }, () => {
-          hideMessage();
-        });
-      });
+      .catch((error) => {
+        console.error('Error while reading attendees from IndexedDb', error)
+        this.setState(
+          {
+            isLoading: false,
+          },
+          () => {
+            hideMessage()
+          }
+        )
+      })
   }
 
   renderFilters = () => {
-    const {classes} = this.props;
+    const { allHeadquarters, loadingHeadquarters } = this.state
+    const { classes } = this.props
 
     return (
       <Grid container justify="center" className={classes.headquarterFilter}>
-        <Headquarters changeHeadquarter={this.handleHeadquarterChanged}/>
-        <DashboardFilters changeFilters={this.handleFiltersChanged}/>
+        <Headquarters
+          changeHeadquarter={this.handleHeadquarterChanged}
+          allHeadquarters={allHeadquarters}
+          loadingHeadquarters={loadingHeadquarters}
+        />
+        <DashboardFilters changeFilters={this.handleFiltersChanged} />
       </Grid>
-    );
+    )
   }
 
   renderEvents = () => {
-    const {events} = this.state;
+    const { events } = this.state
 
     // return events.map((event, index) => {
     //   return (<EventCard
@@ -245,74 +317,77 @@ class EventsPage extends Component {
     //     onClose={this.handleCloseClicked}
     //     onSelectedEvent={this.handleSelectedEvent}/>);
     // });
-    return <EventList
-      events={events}
-      onOpen={this.handleOpenClicked}
-      onPause={this.handlePauseClicked}
-      onClose={this.handleCloseClicked}
-      onSelected={this.handleSelectedEvent}
-    />
+    return (
+      <EventList
+        events={events}
+        onOpen={this.handleOpenClicked}
+        onPause={this.handlePauseClicked}
+        onClose={this.handleCloseClicked}
+        onSelected={this.handleSelectedEvent}
+      />
+    )
   }
 
   renderContent = () => {
-    const {loading} = this.state;
+    const { loading } = this.state
 
     if (loading) {
-      return (<Loading isLoading={loading}/>);
+      return <Loading isLoading={loading} />
     }
 
     return (
       <React.Fragment>
         {this.renderFilters()}
-        <Grid container>
-          {this.renderEvents()}
-        </Grid>
+        <Grid container>{this.renderEvents()}</Grid>
       </React.Fragment>
     )
   }
 
   renderAddButton = () => {
-    const {classes, userContext} = this.props;
-    const {isAdmin} = userContext.user;
+    const { classes, userContext } = this.props
+    const { isAdmin } = userContext.user
 
     if (!isAdmin) {
-      return null;
+      return null
     }
 
     return (
       <NavigationWrapper path="/event/add">
         <Fab className={classes.add} color="primary">
-          <AddIcon/>
+          <AddIcon />
         </Fab>
       </NavigationWrapper>
-    );
+    )
   }
   // TODO: This function should be converted to a specific component
   renderPreviewEvent = () => {
-    const {selectedEvent} = this.state;
-    const {userContext} = this.props;
-    const {role} = userContext.user;
+    const { selectedEvent } = this.state
+    const { userContext } = this.props
+    const { role } = userContext.user
 
     if (role === 'Marketing') {
-      return null;
+      return null
     }
 
     if (!selectedEvent) {
-      return null;
+      return null
     }
 
-    return (<PreviewEvent
-      event={selectedEvent}
-      onOpen={this.handleOpenClicked}
-      onPause={this.handlePauseClicked}
-      onClose={this.handleCloseClicked}
-      onEnter={this.handleEnterClicked}
-      onSynchronize={this.handleSynchronizeClicked}
-      onPreviewClose={this.handlePreviewClosed}/>);
+    return (
+      <PreviewEvent
+        event={selectedEvent}
+        onOpen={this.handleOpenClicked}
+        onPause={this.handlePauseClicked}
+        onClose={this.handleCloseClicked}
+        onEnter={this.handleEnterClicked}
+        onSynchronize={this.handleSynchronizeClicked}
+        onPreviewClose={this.handlePreviewClosed}
+      />
+    )
   }
 
   render() {
-    const {classes} = this.props;
+    const { classes } = this.props
     return (
       <FullLayout title="Special Spider App">
         <h1 className={classes.title}>Events</h1>
@@ -321,10 +396,12 @@ class EventsPage extends Component {
         {this.renderAddButton()}
         {/*this.renderPreviewEvent()*/}
       </FullLayout>
-    );
+    )
   }
 }
 
-EventsPage.contextType = ActionsContext;
+EventsPage.contextType = ActionsContext
 
-export default withMessage(withUserContext(withRouter(withStyles(styles)(EventsPage))));
+export default withMessage(
+  withUserContext(withRouter(withStyles(styles)(EventsPage)))
+)
