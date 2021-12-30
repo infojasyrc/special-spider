@@ -1,26 +1,29 @@
-import React, {Component} from 'react';
-import {withRouter} from 'react-router-dom';
+import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
 import {
   withStyles,
   Paper,
   FormGroup,
   TextField,
   Button,
-  CardMedia
-} from '@material-ui/core';
-import queryString from 'query-string';
+  CardMedia,
+} from '@material-ui/core'
+import queryString from 'query-string'
 
-import NoneLayout from '../hocs/NoneLayout';
-import Security from '../api/security';
-import {UserContext} from '../contexts/UserContext';
-import {withMessage} from '../hocs/Snackbar';
-import {validateEmail} from '../tools';
+import NoneLayout from '../hocs/NoneLayout'
 
-import {styles} from '../styles/Login';
+import { UserContext } from '../contexts/UserContext'
+import { withMessage } from '../hocs/Snackbar'
+import { validateEmail } from '../tools'
+
+// import Security from '../api/security'
+import { Authentication } from '../shared/api'
+
+import { styles } from '../styles/Login'
 
 class Login extends Component {
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
       userName: '',
@@ -28,111 +31,118 @@ class Login extends Component {
       disableLogin: true,
       loading: false,
       redirectURL: null,
-      state: ''
-    };
+      state: '',
+    }
 
-    this.api = new Security();
+    // this.api = new Security()
+    this.api = Authentication()
   }
 
   componentDidMount() {
-    const values = queryString.parse(this.props.location.search);
-    
+    const values = queryString.parse(this.props.location.search)
+
     if (values.redirect_uri) {
-      this.setState({redirectURL: values.redirect_uri});
+      this.setState({ redirectURL: values.redirect_uri })
     }
 
     if (values.state) {
-      this.setState({state: values.state});
+      this.setState({ state: values.state })
     }
   }
 
   verifyCredentials = () => {
-    const {userName, password} = this.state;
+    const { userName, password } = this.state
 
     if (userName && userName !== '' && password && password !== '') {
-      this.setState({disableLogin: false});
+      this.setState({ disableLogin: false })
     }
   }
 
   handleTextChanged = (e) => {
-    const {hideMessage} = this.props;
-    this.setState({
-      [e.target.name]: e.target.value
-    }, () => {
-      this.verifyCredentials();
-    });
-    hideMessage();
+    const { hideMessage } = this.props
+    this.setState(
+      {
+        [e.target.name]: e.target.value,
+      },
+      () => {
+        this.verifyCredentials()
+      }
+    )
+    hideMessage()
   }
 
   isValidLoginData = () => {
-    const {disableLogin, userName, password} = this.state;
-    return !disableLogin && validateEmail(userName) && password.length > 3;
+    const { disableLogin, userName, password } = this.state
+    return !disableLogin && validateEmail(userName) && password.length > 3
   }
 
   handleLoginClicked = (e) => {
-    e.preventDefault();
-    const {showMessage, showError, hideMessage} = this.props;
-    const {redirectURL, state} = this.state;
+    e.preventDefault()
+    const { showMessage, showError, hideMessage } = this.props
+    const { redirectURL, state } = this.state
 
-    hideMessage();
-    showMessage('Loging in');
+    hideMessage()
+    showMessage('Loging in')
 
-    this.setState({loading: true});
+    this.setState({ loading: true })
 
-    const {userName, password} = this.state;
+    const { userName, password } = this.state
 
-    this.api.login({email: userName, password})
-      .then(result => {
-        let token = '';
-        let userData;
-        result.user.getIdToken()
-          .then(resultToken => {
-            token = resultToken;
+    this.api
+      .login({ email: userName, password })
+      .then((result) => {
+        console.log('result login: ', result)
+        let token = ''
+        let userData
+        result.user.getIdToken().then((resultToken) => {
+          token = resultToken
 
-            userData = {
-              // user document -> property id
-              id: '',
-              uid: result.user.uid,
-              // user document -> property name
-              name: '',
-              // user document -> property lastName
-              lastName: '',
-              // user document -> property avatarUrl
-              avatarUrl: '',
-              // user document -> property role
-              role: '',
-              // user document -> property isAdmin
-              isAdmin: ''
-            };
+          userData = {
+            // user document -> property id
+            id: '',
+            uid: result.user.uid,
+            // user document -> property name
+            name: '',
+            // user document -> property lastName
+            lastName: '',
+            // user document -> property avatarUrl
+            avatarUrl: '',
+            // user document -> property role
+            role: '',
+            // user document -> property isAdmin
+            isAdmin: '',
+          }
 
-            this.setState({
-              loading: false
-            }, () => {
-              hideMessage();
-            });
-    
-            this.context.login(userData, token);
-          });
+          this.setState(
+            {
+              loading: false,
+            },
+            () => {
+              hideMessage()
+            }
+          )
+
+          this.context.login(userData, token)
+        })
         //const {token, user, uid, code} = result.data.data;
-        
+
         if (redirectURL && state) {
           //const completeURL = redirectURL+'?state='+state+'&code='+code;
-          const completeURL = redirectURL+'?state='+state+'&code=';
-          window.location = completeURL;
+          const completeURL = redirectURL + '?state=' + state + '&code='
+          window.location = completeURL
         }
-        
       })
-      .catch(err => {
-        console.error(err);
-        hideMessage();
-        showError(err.message ? err.message : 'Wrong username or password');
-      });
+      .catch((err) => {
+        console.error(err)
+        hideMessage()
+        showError(err.message ? err.message : 'Wrong username or password')
+      })
   }
 
   render() {
-    const {userName, password} = this.state;
-    const {classes} = this.props;
-    
+    const { userName, password } = this.state
+    const { classes } = this.props
+
     return (
       <NoneLayout>
         <div className={classes.container}>
@@ -140,8 +150,7 @@ class Login extends Component {
             <CardMedia
               className={classes.loginLogo}
               src="https://carerite.greysignal.com/img/links/poc.png"
-            >
-            </CardMedia>
+            ></CardMedia>
             <FormGroup>
               <TextField
                 className={classes.input}
@@ -152,8 +161,9 @@ class Login extends Component {
                 margin="dense"
                 variant="outlined"
                 autoComplete="off"
-                InputLabelProps={{shrink: true}}
-                onChange={this.handleTextChanged}/>
+                InputLabelProps={{ shrink: true }}
+                onChange={this.handleTextChanged}
+              />
             </FormGroup>
             <FormGroup>
               <TextField
@@ -166,9 +176,10 @@ class Login extends Component {
                 margin="dense"
                 variant="outlined"
                 InputLabelProps={{
-                shrink: true
-              }}
-                onChange={this.handleTextChanged}/>
+                  shrink: true,
+                }}
+                onChange={this.handleTextChanged}
+              />
             </FormGroup>
             <FormGroup>
               <Button
@@ -185,10 +196,10 @@ class Login extends Component {
           </Paper>
         </div>
       </NoneLayout>
-    );
+    )
   }
 }
 
-Login.contextType = UserContext;
+Login.contextType = UserContext
 
-export default withMessage(withRouter(withStyles(styles)(Login)));
+export default withMessage(withRouter(withStyles(styles)(Login)))

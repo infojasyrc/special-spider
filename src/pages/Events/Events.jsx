@@ -22,7 +22,8 @@ import database from '../../database/database'
 import DataService from '../../database/dataService'
 
 import Events from '../../api/events'
-import HeadquartersApi from '../../api/headquarters'
+// import HeadquartersApi from '../../api/headquarters'
+import { Headquarter } from '../../shared/api'
 
 import { styles } from '../../styles/Dashboard'
 
@@ -44,7 +45,7 @@ class EventsPage extends Component {
     }
 
     this.api = new Events()
-    this.apiHeadquarters = new HeadquartersApi()
+    this.apiHeadquarters = Headquarter()
     this.db = new DataService(database, 'attendees')
   }
 

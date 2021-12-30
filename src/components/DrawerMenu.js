@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react'
 import {
   Avatar,
   Drawer,
@@ -6,61 +6,62 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  withStyles
-} from '@material-ui/core';
-import AccountCircleIcon from '@material-ui/icons/AccountCircleRounded';
+  withStyles,
+} from '@material-ui/core'
+import AccountCircleIcon from '@material-ui/icons/AccountCircleRounded'
 
-import LogoutIcon from '@material-ui/icons/ExitToAppRounded';
+import LogoutIcon from '@material-ui/icons/ExitToAppRounded'
 
-import SecurityApi from '../api/security';
+import { Authentication } from '../shared/api'
 
-import LeftMenu from './../components/LeftMenu/LeftMenu.jsx';
-import {withUserContext} from '../hocs/UserContext';
-import {withMessage} from '../hocs/Snackbar';
-import {styles} from '../styles/DrawerMenu';
+import LeftMenu from './../components/LeftMenu/LeftMenu.jsx'
+import { withUserContext } from '../hocs/UserContext'
+import { withMessage } from '../hocs/Snackbar'
+import { styles } from '../styles/DrawerMenu'
 
 class DrawerMenu extends Component {
   constructor(props) {
-    super(props);
+    super(props)
 
-    this.api = new SecurityApi();
+    this.api = new Authentication()
   }
 
   handleLogout = () => {
-    const {showMessage, hideMessage, userContext} = this.props;
-    showMessage('Logging out');
+    const { showMessage, hideMessage, userContext } = this.props
+    showMessage('Logging out')
 
-    this.api.logout()
+    this.api
+      .logout()
       .then(() => {
-        hideMessage();
-        userContext.logout();
+        hideMessage()
+        userContext.logout()
       })
-      .catch(error => {
-        console.error(error);
-        hideMessage();
-      });
+      .catch((error) => {
+        console.error(error)
+        hideMessage()
+      })
   }
 
   renderAvatar = () => {
-    const {classes, userContext} = this.props;
-    const {avatarUrl} = userContext.user;
+    const { classes, userContext } = this.props
+    const { avatarUrl } = userContext.user
 
     if (!avatarUrl || avatarUrl === '') {
-      return (<AccountCircleIcon className={classes.userImage}/>)
+      return <AccountCircleIcon className={classes.userImage} />
     }
 
-    return (<Avatar className={classes.userImage} alt="user" src={avatarUrl}/>);
+    return <Avatar className={classes.userImage} alt="user" src={avatarUrl} />
   }
 
   render() {
-    const {classes, open, userContext, onClose} = this.props;
-    const {fullName, role, isAdmin} = userContext.user;
+    const { classes, open, userContext, onClose } = this.props
+    const { fullName, role, isAdmin } = userContext.user
 
     if (!userContext.isLoggedIn) {
-      return null;
+      return null
     }
 
-    const roleName = isAdmin ? `${'Admin'} - ${role.name}` : role.name;
+    const roleName = isAdmin ? `${'Admin'} - ${role.name}` : role.name
 
     return (
       <Drawer open={open} onClose={onClose}>
@@ -74,15 +75,15 @@ class DrawerMenu extends Component {
           </div>
         </div>
         <div className={classes.drawerMiddle}>
-          <LeftMenu userContext={userContext}/>
+          <LeftMenu userContext={userContext} />
         </div>
         <div className={classes.drawerBottom}>
           <List>
             <ListItem button onClick={this.handleLogout}>
               <ListItemIcon>
-                <LogoutIcon/>
+                <LogoutIcon />
               </ListItemIcon>
-              <ListItemText primary="Logout"/>
+              <ListItemText primary="Logout" />
             </ListItem>
           </List>
         </div>
@@ -91,4 +92,4 @@ class DrawerMenu extends Component {
   }
 }
 
-export default withMessage(withUserContext(withStyles(styles)(DrawerMenu)));
+export default withMessage(withUserContext(withStyles(styles)(DrawerMenu)))
