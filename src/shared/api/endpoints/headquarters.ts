@@ -1,6 +1,6 @@
 import { getAppCollections } from './base'
 
-function Headquarter() {
+function HeadquarterAPI() {
   const collectionName = 'headquarters'
 
   const getAll = async () => {
@@ -13,4 +13,4 @@ function Headquarter() {
   }
 }
 
-export default Headquarter
+export default HeadquarterAPI

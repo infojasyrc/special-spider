@@ -1,4 +1,5 @@
 import Authentication from './endpoints/authentication'
-import Headquarter from './endpoints/headquarters'
+import HeadquarterAPI from './endpoints/headquarters'
+import ConferenceAPI from './endpoints/conferences'
 
-export { Authentication, Headquarter }
+export { Authentication, ConferenceAPI, HeadquarterAPI }

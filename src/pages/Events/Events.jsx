@@ -23,7 +23,7 @@ import DataService from '../../database/dataService'
 
 import Events from '../../api/events'
 // import HeadquartersApi from '../../api/headquarters'
-import { Headquarter } from '../../shared/api'
+import { HeadquarterAPI } from '../../shared/api'
 
 import { styles } from '../../styles/Dashboard'
 
@@ -45,7 +45,7 @@ class EventsPage extends Component {
     }
 
     this.api = new Events()
-    this.apiHeadquarters = Headquarter()
+    this.apiHeadquarters = HeadquarterAPI()
     this.db = new DataService(database, 'attendees')
   }
 
@@ -53,6 +53,7 @@ class EventsPage extends Component {
     this.apiHeadquarters
       .getAll()
       .then((headquarters) => {
+        console.log('headquarters: ', headquarters)
         this.setState({
           allHeadquarters: headquarters,
         })

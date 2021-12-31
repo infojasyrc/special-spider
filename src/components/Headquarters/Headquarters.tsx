@@ -2,7 +2,7 @@ import React from 'react'
 import { Grid, MenuItem, Select } from '@material-ui/core'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 
-import { Headquarter } from '../../shared/types'
+import { Headquarter } from '../../shared/entities'
 
 const useStyles = makeStyles(() =>
   createStyles({

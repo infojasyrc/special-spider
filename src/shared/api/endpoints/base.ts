@@ -1,4 +1,9 @@
-import { collection, getFirestore, getDocs, Firestore } from 'firebase/firestore'
+import {
+  collection,
+  getFirestore,
+  getDocs,
+  Firestore,
+} from 'firebase/firestore'
 
 import getFirebaseApp from '../backends/firebase'
 
