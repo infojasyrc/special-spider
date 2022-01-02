@@ -3,20 +3,19 @@ import { withRouter } from 'react-router-dom'
 import { Grid, withStyles, Fab } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
 
-import FullLayout from '../../hocs/FullLayout'
 import { ActionsContext } from '../../contexts/ActionsContext'
+import FullLayout from '../../hocs/FullLayout'
 import { withMessage } from '../../hocs/Snackbar'
-
-import Loading from '../../components/Loading'
-// import EventCard from '../EventCard';
-import EventList from '../../components/EventList/EventList'
-import NavigationWrapper from '../../components/Navigation/NavigationWrapper'
-import { sortDescending, sortAscending } from '../../tools'
 import { withUserContext } from '../../hocs/UserContext'
 
-import PreviewEvent from '../../components/PreviewEvent'
-import Headquarters from '../../components/Headquarters/Headquarters'
 import DashboardFilters from '../../components/Dashboard/DashboardFilters'
+import EventList from '../../components/EventList/EventList'
+import Headquarters from '../../components/Headquarters/Headquarters'
+import Loading from '../../components/Loading'
+import NavigationWrapper from '../../components/Navigation/NavigationWrapper'
+import PreviewEvent from '../../components/PreviewEvent/PreviewEvent'
+
+import { sortDescending, sortAscending } from '../../tools'
 
 import database from '../../database/database'
 import DataService from '../../database/dataService'
@@ -53,7 +52,6 @@ class EventsPage extends Component {
     this.apiHeadquarters
       .getAll()
       .then((headquarters) => {
-        console.log('headquarters: ', headquarters)
         this.setState({
           allHeadquarters: headquarters,
         })
@@ -307,31 +305,8 @@ class EventsPage extends Component {
     )
   }
 
-  renderEvents = () => {
-    const { events } = this.state
-
-    // return events.map((event, index) => {
-    //   return (<EventCard
-    //     event={event}
-    //     key={index}
-    //     onOpen={this.handleOpenClicked}
-    //     onPause={this.handlePauseClicked}
-    //     onClose={this.handleCloseClicked}
-    //     onSelectedEvent={this.handleSelectedEvent}/>);
-    // });
-    return (
-      <EventList
-        events={events}
-        onOpen={this.handleOpenClicked}
-        onPause={this.handlePauseClicked}
-        onClose={this.handleCloseClicked}
-        onSelected={this.handleSelectedEvent}
-      />
-    )
-  }
-
   renderContent = () => {
-    const { loading } = this.state
+    const { loading, events } = this.state
 
     if (loading) {
       return <Loading isLoading={loading} />
@@ -340,7 +315,15 @@ class EventsPage extends Component {
     return (
       <React.Fragment>
         {this.renderFilters()}
-        <Grid container>{this.renderEvents()}</Grid>
+        <Grid container>
+          <EventList
+            events={events}
+            onOpen={this.handleOpenClicked}
+            onPause={this.handlePauseClicked}
+            onClose={this.handleCloseClicked}
+            onSelected={this.handleSelectedEvent}
+          />
+        </Grid>
       </React.Fragment>
     )
   }

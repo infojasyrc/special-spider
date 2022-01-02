@@ -6,7 +6,7 @@ import EventTypes from './EventTypes/EventTypes';
 import FormButtons from './FormButtons/FormButtons';
 import SelectWithLoading from './SelectWithLoading';
 import TextFieldWithValidation from './TextFieldWithValidation';
-import ImagesPreview from './ImagesPreview';
+import ImagesPreview from './ImagesPreview/ImagesPreview';
 
 import NavigationLayout from '../hocs/NavigationLayout';
 

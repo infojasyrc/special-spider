@@ -1,4 +1,4 @@
-export type ConferenceStatus = 'created' | 'opened'
+export type ConferenceStatus = 'created' | 'opened' | 'paused' | 'closed'
 
 export interface Conference {
   id: string,
