@@ -1,6 +1,6 @@
 import { createStyles, makeStyles } from '@material-ui/styles'
 
-import EventCard from '../EventCard'
+import EventCard from '../EventCard/EventCard'
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -22,16 +22,16 @@ export type EventListProps = {
 
 export default function EventList({
   events,
-  onOpen,
-  onPause,
-  onClose,
+  // onOpen,
+  // onPause,
+  // onClose,
   onSelected,
 }: EventListProps): JSX.Element {
   const classes = useStyles()
 
-  const handleOpen = () => onOpen
-  const handlePause = () => onPause
-  const handleClose = () => onClose
+  // const handleOpen = () => onOpen
+  // const handlePause = () => onPause
+  // const handleClose = () => onClose
   const handleSelected = () => onSelected
 
   if (!events || events.length === 0) {
@@ -48,9 +48,9 @@ export default function EventList({
         <EventCard
           event={event}
           key={index}
-          onOpen={handleOpen}
-          onPause={handlePause}
-          onClose={handleClose}
+          // onOpen={handleOpen}
+          // onPause={handlePause}
+          // onClose={handleClose}
           onSelectedEvent={handleSelected}
         />
       ))}

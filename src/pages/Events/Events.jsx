@@ -21,8 +21,8 @@ import database from '../../database/database'
 import DataService from '../../database/dataService'
 
 import Events from '../../api/events'
-// import HeadquartersApi from '../../api/headquarters'
-import { HeadquarterAPI } from '../../shared/api'
+
+import { HeadquarterAPI, ConferenceAPI } from '../../shared/api'
 
 import { styles } from '../../styles/Dashboard'
 
@@ -44,6 +44,7 @@ class EventsPage extends Component {
     }
 
     this.api = new Events()
+    this.apiConferences = ConferenceAPI()
     this.apiHeadquarters = HeadquarterAPI()
     this.db = new DataService(database, 'attendees')
   }
@@ -73,32 +74,34 @@ class EventsPage extends Component {
   }
 
   fetchEvents = () => {
-    const { selectedYear, selectedHeadquarter, selectedEvent } = this.state
+    // const { selectedYear, selectedHeadquarter, selectedEvent } = this.state
     const { showLoading, hideMessage, userContext } = this.props
 
-    if (!selectedYear || !selectedHeadquarter) {
-      return
-    }
+    // if (!selectedYear || !selectedHeadquarter) {
+    //   return
+    // }
+
+    console.log('user info:', userContext.user)
 
     showLoading()
 
-    this.api
-      .getAll(selectedYear, selectedHeadquarter, userContext.user.isAdmin)
+    // this.api.getAll(selectedYear, selectedHeadquarter, userContext.user.isAdmin)
+    this.apiConferences.getAll()
       .then((events) => {
-        let newSelectedEvent = null
+        // let newSelectedEvent = null
 
-        if (selectedEvent) {
-          const index = events.findIndex((event) => {
-            return event.id === selectedEvent.id
-          })
+        // if (selectedEvent) {
+        //   const index = events.findIndex((event) => {
+        //     return event.id === selectedEvent.id
+        //   })
 
-          newSelectedEvent = index > 0 ? events[index] : null
-        }
+        //   newSelectedEvent = index > 0 ? events[index] : null
+        // }
 
         this.setState(
           {
             events: this.sortByDate(events),
-            selectedEvent: newSelectedEvent,
+            // selectedEvent: newSelectedEvent,
             loading: false,
             error: null,
           },

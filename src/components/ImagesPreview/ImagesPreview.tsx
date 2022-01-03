@@ -1,7 +1,7 @@
 import { Grid, IconButton, createStyles, makeStyles } from '@material-ui/core'
 import ImageIcon from '@material-ui/icons/AddAPhoto'
 
-import { RenderImage } from './RenderImage'
+import RenderImage from './RenderImage'
 
 import { ImageMediaType } from '../../shared/entities'
 
