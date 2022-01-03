@@ -2,6 +2,8 @@ import { createStyles, makeStyles } from '@material-ui/styles'
 
 import EventCard from '../EventCard/EventCard'
 
+import { Conference } from '../../shared/entities'
+
 const useStyles = makeStyles(() =>
   createStyles({
     noResults: {
@@ -13,7 +15,7 @@ const useStyles = makeStyles(() =>
 )
 
 export type EventListProps = {
-  events: []
+  events: Conference[]
   onOpen: () => {}
   onPause: () => {}
   onClose: () => {}

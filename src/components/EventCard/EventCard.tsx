@@ -3,7 +3,7 @@
 import {
   Card,
   CardActionArea,
-  CardMedia,
+  // CardMedia,
   createStyles,
   Grid,
   makeStyles,
@@ -26,7 +26,7 @@ const useStyles = makeStyles(() =>
       position: 'relative',
     },
     cardGridItem: {
-      padding: '0.5em',
+      padding: '0.2em',
     },
     image: {
       width: '100%',
@@ -113,14 +113,15 @@ export default function EventCard({
     //     if (!onSelectedEvent) {
     //       return;
     //     }
+    console.log('selected event: ', event)
     onSelectedEvent(event)
   }
 
   return (
     <Grid className={classes.cardGridItem} item xs={12} sm={5} md={4} lg={3}>
-      <Card>
+      <Card className={classes.card}>
         <CardActionArea onClick={handleCardClicked}></CardActionArea>
-        <CardMedia
+        {/* <CardMedia
           className={classes.image}
           component="img"
           image={
@@ -129,7 +130,7 @@ export default function EventCard({
               : '/images/NoImage.png'
           }
           title={event.name}
-        />
+        /> */}
         <div className={classes.bottom}>
           <h2 className={classes.title}>{event.name}</h2>
           <ConferenceStatusSection status={event.status} />
@@ -140,7 +141,6 @@ export default function EventCard({
 }
 
 // class EventCard extends Component {
-
 
 //   getDatePart = (date, part) => {
 //     const dateObject = Moment(date, 'YYYY-MM-DD');

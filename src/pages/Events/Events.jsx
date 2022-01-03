@@ -379,8 +379,8 @@ class EventsPage extends Component {
     return (
       <FullLayout title="Special Spider App">
         <h1 className={classes.title}>Events</h1>
-        <h1 className={classes.title}>Accounts</h1>
         {this.renderContent()}
+        <h1 className={classes.title}>Accounts</h1>
         {this.renderAddButton()}
         {/*this.renderPreviewEvent()*/}
       </FullLayout>
