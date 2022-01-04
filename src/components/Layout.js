@@ -8,7 +8,7 @@ import { withUserContext } from '../hocs/UserContext'
 import LayoutContext, { LayoutTypes } from '../shared/contexts/Layout'
 import FullAppBar from './FullAppBar'
 import NavigationBar from './NavigationBar'
-import Login from './Login'
+import LoginPage from '../pages/Login/Login'
 
 class Layout extends Component {
   constructor(props) {
@@ -57,7 +57,7 @@ class Layout extends Component {
       return (
         <Paper className={classes.mainContainer}>
           <div className={classNames.join(' ')}>
-            <Login />
+            <LoginPage />
           </div>
         </Paper>
       )
