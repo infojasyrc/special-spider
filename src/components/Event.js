@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom'
 
 import { withStyles, Button } from '@material-ui/core'
 
-import LayoutContext from '../shared/contexts/Layout'
+import LayoutContext from '../shared/contexts/LayoutContext'
 import NoneLayout from '../hocs/NoneLayout'
 import EventsApi from '../api/events'
 import Loading from './Loading'

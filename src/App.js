@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
-import Layout from './components/Layout'
+import Main from './components/Main/Main'
+
 import ThemeProvider from './providers/ThemeProvider'
 import ActionsProvider from './providers/ActionsProvider'
 import UserProvider from './providers/UserProvider'
 import Routes from './routes/Routes'
 
-import { LayoutProvider } from './shared/contexts/Layout'
+import { LayoutProvider } from './shared/contexts'
 
 class App extends Component {
   render() {
@@ -14,9 +15,9 @@ class App extends Component {
         <UserProvider>
           <ActionsProvider>
             <LayoutProvider>
-              <Layout>
+              <Main>
                 <Routes />
-              </Layout>
+              </Main>
             </LayoutProvider>
           </ActionsProvider>
         </UserProvider>

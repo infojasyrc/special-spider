@@ -1,5 +1,5 @@
 import { ReactNode, useContext } from 'react'
-import LayoutContext, { LayoutTypes } from '../shared/contexts/Layout'
+import LayoutContext, { LayoutTypes } from '../shared/contexts/LayoutContext'
 
 export interface NoneLayoutProps {
   children: ReactNode

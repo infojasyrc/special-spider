@@ -21,10 +21,10 @@ import AddIcon from '@material-ui/icons/Add'
 import UsersApi from '../api/users'
 import { styles } from '../styles/Users'
 
-import LayoutContext from '../shared/contexts/Layout'
+import LayoutContext from '../shared/contexts/LayoutContext'
 import NavigationLayout from '../hocs/NavigationLayout'
 import Loading from './Loading'
-import NavigationWrapper from './NavigationWrapper'
+import NavigationWrapper from './Navigation/NavigationWrapper'
 import { withUserContext } from '../hocs/UserContext'
 import { withMessage } from '../hocs/Snackbar'
 

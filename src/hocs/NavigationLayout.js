@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import LayoutContext, { LayoutTypes } from '../shared/contexts/Layout'
+import LayoutContext, { LayoutTypes } from '../shared/contexts/LayoutContext'
 
 class NavigationLayout extends Component {
   componentDidMount() {
