@@ -3,7 +3,6 @@ import {withRouter} from 'react-router-dom';
 import {withStyles} from '@material-ui/core';
 
 import FullLayout from '../../hocs/FullLayout';
-import {ActionsContext} from '../../contexts/ActionsContext';
 import {withMessage} from '../../hocs/Snackbar';
 
 import {withUserContext} from '../../hocs/UserContext';
@@ -24,7 +23,5 @@ class Dashboard extends Component {
     );
   }
 }
-
-Dashboard.contextType = ActionsContext;
 
 export default withMessage(withUserContext(withRouter(withStyles(styles)(Dashboard))));

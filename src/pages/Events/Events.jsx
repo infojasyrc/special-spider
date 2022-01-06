@@ -3,7 +3,6 @@ import { withRouter } from 'react-router-dom'
 import { Grid, withStyles, Fab } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
 
-import { ActionsContext } from '../../contexts/ActionsContext'
 import FullLayout from '../../hocs/FullLayout'
 import { withMessage } from '../../hocs/Snackbar'
 import { withUserContext } from '../../hocs/UserContext'
@@ -388,7 +387,7 @@ class EventsPage extends Component {
   }
 }
 
-EventsPage.contextType = ActionsContext
+// EventsPage.contextType = ActionsContext
 
 export default withMessage(
   withUserContext(withRouter(withStyles(styles)(EventsPage)))
