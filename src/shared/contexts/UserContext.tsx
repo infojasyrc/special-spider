@@ -20,11 +20,10 @@ const defaultState = {
   logout: () => {},
 }
 
-const previousLoggin = JSON.parse(
-  window.localStorage.getItem('userData') || ''
-)
-
-if (previousLoggin) {
+if (window.localStorage.getItem('userData')) {
+  const previousLoggin = JSON.parse(
+    window.localStorage.getItem('userData') || ''
+  )
   defaultState.isLoggedIn = true
   defaultState.user = previousLoggin
 }

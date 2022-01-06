@@ -3,12 +3,15 @@ import { Paper, createStyles, makeStyles } from '@material-ui/core'
 
 import LoginPage from '../../pages/Login/Login'
 
-import FullAppBar from '../FullAppBar'
+import FullAppBar from '../FullAppBar/FullAppBar'
 import NavigationBar from '../Navigation/NavigationBar'
 
 import UserContext from '../../shared/contexts/UserContext'
 import LayoutContext, { LayoutTypes } from '../../shared/contexts/LayoutContext'
 
+import { Authentication } from '../../shared/api'
+
+import config from '../../environment/environment'
 import { colors } from '../../styles/theme/colors'
 
 const useStyles = makeStyles((theme) =>
@@ -42,7 +45,7 @@ export interface MainProps {
 }
 
 export default function Main({ children }: MainProps): JSX.Element {
-  const { isLoggedIn } = useContext(UserContext)
+  const { isLoggedIn, logout } = useContext(UserContext)
   const { layout, title, showLogo } = useContext(LayoutContext)
 
   const classes = useStyles()
@@ -57,9 +60,26 @@ export default function Main({ children }: MainProps): JSX.Element {
     )
   }
 
+  const handleLogout = () => {
+    const api = Authentication()
+    api.logout()
+    .then(() => {
+      logout()
+    })
+    .catch((error) => {
+      console.error(error)
+    })
+  }
+
   return (
     <>
-      {layout === LayoutTypes.FULL && <FullAppBar title={title} />}
+      {layout === LayoutTypes.FULL && (
+        <FullAppBar
+          title={title}
+          version={config.version || ''}
+          onLogout={handleLogout}
+        />
+      )}
       {layout === LayoutTypes.NAVIGATION && (
         <NavigationBar title={title} showLogo={showLogo} />
       )}
