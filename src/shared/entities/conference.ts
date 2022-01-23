@@ -11,3 +11,8 @@ export interface Conference {
   year?: number
   images?: ImageMediaType[]
 }
+
+export interface ConferenceFilters {
+  year: string
+  sortBy: string
+}

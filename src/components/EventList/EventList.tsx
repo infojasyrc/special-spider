@@ -16,10 +16,10 @@ const useStyles = makeStyles(() =>
 
 export type EventListProps = {
   events: Conference[]
-  onOpen: () => {}
-  onPause: () => {}
-  onClose: () => {}
-  onSelected: () => {}
+  // onOpen: () => void
+  // onPause: () => void
+  // onClose: () => void
+  onSelected: () => void
 }
 
 export default function EventList({

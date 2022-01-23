@@ -5,7 +5,8 @@ import queryString from 'query-string'
 
 import Login from '../../components/Login/Login'
 
-import { UserContext } from '../../contexts/UserContext'
+// import { UserContext } from '../../contexts/UserContext'
+import UserContext from '../../shared/contexts/UserContext'
 import { withMessage } from '../../hocs/Snackbar'
 
 import { Authentication } from '../../shared/api'

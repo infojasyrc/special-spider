@@ -20,7 +20,7 @@ export interface HeadquartersProps {
   loading: boolean
   allHeadquarters: Headquarter[]
   selectedHeadquarter?: string,
-  onChangeHeadquarter: (headquarter: string) => {},
+  onChangeHeadquarter: (headquarter: string) => void,
 }
 
 export default function Headquarters({
