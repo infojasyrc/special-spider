@@ -97,9 +97,10 @@ const useStyles = makeStyles((theme) =>
 
 export interface LoginProps {
   onLogin: (userName: string, password: string) => void
+  loading: boolean
 }
 
-export default function Login({ onLogin }: LoginProps): JSX.Element {
+export default function Login({ onLogin, loading }: LoginProps): JSX.Element {
   const [userName, setUserName] = useState('')
   const [password, setPassword] = useState('')
   const [disableLogin, setDisableLogin] = useState(true)
@@ -172,7 +173,7 @@ export default function Login({ onLogin }: LoginProps): JSX.Element {
           <FormGroup>
             <Button
               className={classes.button}
-              disabled={!isValidLoginData()}
+              disabled={loading || !isValidLoginData()}
               type="submit"
               variant="contained"
               onClick={handleLoginClicked}
