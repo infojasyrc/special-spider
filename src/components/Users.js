@@ -23,7 +23,7 @@ import { styles } from '../styles/Users'
 
 import LayoutContext from '../shared/contexts/LayoutContext'
 import NavigationLayout from '../hocs/NavigationLayout'
-import Loading from './Loading'
+import Loading from './Loading/Loading'
 import NavigationWrapper from './Navigation/NavigationWrapper'
 import { withUserContext } from '../hocs/UserContext'
 import { withMessage } from '../hocs/Snackbar'

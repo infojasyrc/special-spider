@@ -6,7 +6,7 @@ import { withStyles, Button } from '@material-ui/core'
 import LayoutContext from '../shared/contexts/LayoutContext'
 import NoneLayout from '../hocs/NoneLayout'
 import EventsApi from '../api/events'
-import Loading from './Loading'
+import Loading from './Loading/Loading'
 import Slider from './Slider'
 import { withMessage } from '../hocs/Snackbar'
 
