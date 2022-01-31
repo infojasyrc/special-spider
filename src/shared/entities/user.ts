@@ -1,19 +1,25 @@
 export interface User {
-  id: string
   uid: string
   firstName: string
   lastName: string
-  avatarUrl: string
-  role?: string
   isAdmin: boolean
+  email: string
+  role?: string
+  isSuperAdmin?: boolean
 }
 
-export interface UserSession {
+export interface UserInApp extends User {
   id: string
+}
+
+export interface UserCredentials {
   uid: string
-  fullName: string
-  avatarUrl: string
-  role?: string
-  isAdmin: boolean
+  displayName: string
+  email: string
+  photoURL?: string
+  phoneNumber?: string
+}
+
+export interface UserSession extends UserInApp, UserCredentials {
   token: string
 }

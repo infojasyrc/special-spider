@@ -1,12 +1,12 @@
 import React, { ReactNode, useState } from 'react'
 
-import { User, UserSession } from '../entities'
+import { UserCredentials, UserInApp, UserSession } from '../entities'
 
 interface ContextProps {
   isLoggedIn: boolean
   defaultLocation: null | string
   user: null | UserSession
-  login: (user: User, token: string) => void
+  login: (user: UserInApp, userCredentials: UserCredentials, token: string) => void
   setLocation: (location: string) => void
   logout: () => void
 }
@@ -37,15 +37,12 @@ const UserProvider = ({ children }: { children: ReactNode }) => {
     defaultState.defaultLocation
   )
 
-  const login = (user: User, token: string) => {
+  const login = (user: UserInApp, userCredentials: UserCredentials, token: string) => {
     setIsLoggedIn(true)
     const userData: UserSession = {
-      id: user.id,
-      uid: user.uid,
-      fullName: `${user.firstName} ${user.lastName}`,
-      avatarUrl: user.avatarUrl,
-      isAdmin: user.isAdmin,
-      token: token,
+      ...user,
+      ...userCredentials,
+      token
     }
     setUser(userData)
     window.localStorage.setItem('userData', JSON.stringify(userData))

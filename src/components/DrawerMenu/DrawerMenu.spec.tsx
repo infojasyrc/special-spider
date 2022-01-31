@@ -33,9 +33,12 @@ describe('drawer menu component', () => {
     const user: UserSession = {
       id: '01',
       uid: '0001',
-      fullName: 'Juana Perez',
-      avatarUrl: '',
+      firstName: 'Juan',
+      lastName: 'Perez',
       isAdmin: true,
+      displayName: 'Sweet Test',
+      photoURL: '',
+      email: '',
       token: '',
     }
     it('should render all elements', () => {
@@ -46,7 +49,7 @@ describe('drawer menu component', () => {
       }
       renderComponent(props, isLoggedIn, user)
 
-      const fullName = screen.getByText(/juana perez/i)
+      const fullName = screen.getByText(/sweet test/i)
       expect(fullName).toBeInTheDocument()
     })
   })

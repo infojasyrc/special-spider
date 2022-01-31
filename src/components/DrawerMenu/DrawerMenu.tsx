@@ -66,18 +66,18 @@ export default function DrawerMenu({
   return (
     <Drawer open={open} onClose={onClose}>
       <div className={classes.drawerTop}>
-        {!user?.avatarUrl && (
+        {!user?.photoURL && (
           <AccountCircleIcon className={classes.userImage} />
         )}
-        {user?.avatarUrl && (
+        {user?.photoURL && (
           <Avatar
             className={classes.userImage}
             alt="user"
-            src={user?.avatarUrl}
+            src={user?.photoURL}
           />
         )}
         <div>
-          <label className={classes.userName}>{user?.fullName}</label>
+          <label className={classes.userName}>{user?.displayName}</label>
         </div>
         <div>
           <label className={classes.role}>{user?.role}</label>

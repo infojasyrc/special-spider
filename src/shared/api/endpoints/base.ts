@@ -3,6 +3,9 @@ import {
   getFirestore,
   getDocs,
   Firestore,
+  query,
+  where,
+  limit,
 } from 'firebase/firestore'
 
 import getFirebaseApp from '../backends/firebase'
@@ -15,4 +18,16 @@ const getAppCollections = async (collectionName: string) => {
   return data
 }
 
-export { getAppCollections }
+const filterByInCollections = async (
+  collectionName: string,
+  filterBy: string,
+  filterValue: string
+) => {
+  const db: Firestore = getFirestore(getFirebaseApp())
+  const collectionRef = collection(db, collectionName)
+  const filterQuery = query(collectionRef, where(filterBy, '==', filterValue), limit(1))
+  const querySnapshot = await getDocs(filterQuery)
+  return querySnapshot
+}
+
+export { getAppCollections, filterByInCollections }

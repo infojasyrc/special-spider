@@ -8,8 +8,8 @@ import Login from '../../components/Login/Login'
 import UserContext from '../../shared/contexts/UserContext'
 // import { withMessage } from '../../hocs/Snackbar'
 
-import { Authentication } from '../../shared/api'
-import { User } from '../../shared/entities'
+import { Authentication, UsersAPI } from '../../shared/api'
+import { UserCredentials, UserInApp } from '../../shared/entities'
 
 export default function LoginPage(): JSX.Element {
   const [loading, setLoading] = useState(false)
@@ -19,6 +19,7 @@ export default function LoginPage(): JSX.Element {
   const { login } = useContext(UserContext)
 
   const api = Authentication()
+  const usersAPI = UsersAPI()
 
   const handleLoginClicked = (userName: string, password: string) => {
     // const { showMessage, showError, hideMessage } = this.props
@@ -35,26 +36,11 @@ export default function LoginPage(): JSX.Element {
         let token = ''
         result.user.getIdToken().then((resultToken) => {
           token = resultToken
-
-          const userData: User = {
-            // user document -> property id
-            id: '',
-            uid: result.user.uid,
-            // user document -> property name
-            firstName: '',
-            // user document -> property lastName
-            lastName: '',
-            // user document -> property avatarUrl
-            avatarUrl: '',
-            // user document -> property role
-            role: '',
-            // user document -> property isAdmin
-            isAdmin: false,
-          }
-          setLoading(false)
-          login(userData, token)
+          usersAPI.filterByUID(result.user.uid).then(userDoc => {
+            login(userDoc as UserInApp, result.user as UserCredentials, token)
+            setLoading(false)
+          })
         })
-        //const {token, user, uid, code} = result.data.data;
 
         if (redirectURL && state) {
           //const completeURL = redirectURL+'?state='+state+'&code='+code;
