@@ -4,7 +4,6 @@ import { useContext, useState } from 'react'
 
 import Login from '../../components/Login/Login'
 
-// import { UserContext } from '../../contexts/UserContext'
 import UserContext from '../../shared/contexts/UserContext'
 // import { withMessage } from '../../hocs/Snackbar'
 
@@ -81,66 +80,6 @@ export default function LoginPage(): JSX.Element {
 //     if (values.state) {
 //       this.setState({ state: values.state })
 //     }
-//   }
-
-//   handleLoginClicked = (userName, password) => {
-//     const { showMessage, showError, hideMessage } = this.props
-//     const { redirectURL, state } = this.state
-
-//     hideMessage()
-//     showMessage('Loging in')
-
-//     this.setState({ loading: true })
-
-//     this.api
-//       .login({ email: userName, password })
-//       .then((result) => {
-//         console.log('result login: ', result)
-//         let token = ''
-//         let userData
-//         result.user.getIdToken().then((resultToken) => {
-//           token = resultToken
-
-//           userData = {
-//             // user document -> property id
-//             id: '',
-//             uid: result.user.uid,
-//             // user document -> property name
-//             name: '',
-//             // user document -> property lastName
-//             lastName: '',
-//             // user document -> property avatarUrl
-//             avatarUrl: '',
-//             // user document -> property role
-//             role: '',
-//             // user document -> property isAdmin
-//             isAdmin: '',
-//           }
-
-//           this.setState(
-//             {
-//               loading: false,
-//             },
-//             () => {
-//               hideMessage()
-//             }
-//           )
-
-//           this.context.login(userData, token)
-//         })
-//         //const {token, user, uid, code} = result.data.data;
-
-//         if (redirectURL && state) {
-//           //const completeURL = redirectURL+'?state='+state+'&code='+code;
-//           const completeURL = redirectURL + '?state=' + state + '&code='
-//           window.location = completeURL
-//         }
-//       })
-//       .catch((err) => {
-//         console.error(err)
-//         hideMessage()
-//         showError(err.message ? err.message : 'Wrong username or password')
-//       })
 //   }
 
 //   render() {
