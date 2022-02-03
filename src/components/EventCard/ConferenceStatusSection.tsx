@@ -7,14 +7,8 @@ import { colors } from '../../styles/theme/colors'
 const useStyles = makeStyles(() =>
   createStyles({
     status: {
-      position: 'absolute',
-      bottom: '0.5em',
-      right: '2.5em',
       backgroundColor: colors.white,
-      paddingTop: '0.15em',
-      paddingBottom: '0.15em',
-      paddingRight: '1em',
-      paddingLeft: '1em',
+      padding: '0.15em 0.76em',
       borderRadius: '5%',
     },
     statusCreated: {

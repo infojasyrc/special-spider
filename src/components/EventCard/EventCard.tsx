@@ -1,5 +1,5 @@
-// import React from 'react'
 // import { withRouter } from 'react-router-dom'
+import Moment from 'moment'
 import {
   Card,
   CardActionArea,
@@ -8,7 +8,6 @@ import {
   Grid,
   makeStyles,
 } from '@material-ui/core'
-// import Moment from 'moment'
 
 import ConferenceStatusSection from './ConferenceStatusSection'
 
@@ -24,6 +23,7 @@ const useStyles = makeStyles(() =>
       height: '20em',
       overflow: 'hidden',
       position: 'relative',
+      display: 'flex',
     },
     cardGridItem: {
       padding: '0.2em',
@@ -34,9 +34,6 @@ const useStyles = makeStyles(() =>
       objectFit: 'cover',
     },
     location: {
-      position: 'absolute',
-      top: '1em',
-      left: '1em',
       backgroundColor: colors.dark,
       paddingLeft: '0.5em',
       paddingRight: '0.5em',
@@ -72,24 +69,25 @@ const useStyles = makeStyles(() =>
       margin: 0,
     },
     bottom: {
-      position: 'absolute',
-      bottom: '0',
-      height: '25%',
+      display: 'grid',
       width: '100%',
       padding: '1em',
       backgroundColor: colors.transparentBlack,
     },
     title: {
       color: colors.white,
-      overflow: 'hidden',
       fontFamily: 'Exo',
       whiteSpace: 'nowrap',
-      textOverflow: 'ellipsis',
-      marginRight: '1em',
       margin: 0,
     },
+    eventStatus: {
+      position: 'absolute',
+      right: '0.5em',
+    }
   })
 )
+
+type DateParts = 'day' | 'month'
 
 export interface EventCardProps {
   event: Conference
@@ -117,11 +115,29 @@ export default function EventCard({
     onSelectedEvent(event)
   }
 
+  const getDatePart = (date: string, part: DateParts) => {
+    const dateObject = Moment(date, 'YYYY-MM-DD')
+
+    if (part === 'day') {
+      return dateObject.format('D')
+    }
+
+    if (part === 'month') {
+      return dateObject.format('MMM')
+    }
+
+    return dateObject.format('D MMM YYYY')
+  }
+
+  //     const url = event.images && event.images.length > 0
+  //       ? event.images[0].url
+  //       : '/images/NoImage.png';
+
   return (
     <Grid className={classes.cardGridItem} item xs={12} sm={5} md={4} lg={3}>
       <Card className={classes.card}>
-        <CardActionArea onClick={handleCardClicked}></CardActionArea>
-        {/* <CardMedia
+        <CardActionArea onClick={handleCardClicked}>
+          {/* <CardMedia
           className={classes.image}
           component="img"
           image={
@@ -131,56 +147,23 @@ export default function EventCard({
           }
           title={event.name}
         /> */}
-        <div className={classes.bottom}>
-          <h2 className={classes.title}>{event.name}</h2>
-          <ConferenceStatusSection status={event.status} />
-        </div>
+          <div className={classes.location}></div>
+          <div className={classes.date}>
+            <h1 className={classes.day}>
+              {getDatePart(event.eventDate, 'day')}
+            </h1>
+            <h3 className={classes.month}>
+              {getDatePart(event.eventDate, 'month')}
+            </h3>
+          </div>
+          <div className={classes.bottom}>
+            <h2 className={classes.title}>{event.name}</h2>
+            <div className={classes.eventStatus}>
+              <ConferenceStatusSection status={event.status} />
+            </div>            
+          </div>
+        </CardActionArea>
       </Card>
     </Grid>
   )
 }
-
-// class EventCard extends Component {
-
-//   getDatePart = (date, part) => {
-//     const dateObject = Moment(date, 'YYYY-MM-DD');
-
-//     if (part === 'day') {
-//       return dateObject.format('D');
-//     }
-
-//     if (part === 'month') {
-//       return dateObject.format('MMM');
-//     }
-
-//     return dateObject.format('D MMM YYYY');
-//   }
-
-//   renderCard = (event) => {
-//     const {classes} = this.props;
-
-//     const url = event.images && event.images.length > 0
-//       ? event.images[0].url
-//       : '/images/NoImage.png';
-
-//     return (
-//       <CardActionArea onClick={this.handleCardClicked}>
-//         <CardMedia
-//           className={classes.image}
-//           component="img"
-//           image={url}
-//           title={event.name}/>
-//         <div className={classes.location}>
-//           <h4 className={classes.locationName}>{event.headquarter.name}</h4>
-//         </div>
-//         <div className={classes.date}>
-//           <h1 className={classes.day}>{this.getDatePart(event.date, 'day')}</h1>
-//           <h3 className={classes.month}>{this.getDatePart(event.date, 'month')}</h3>
-//         </div>
-//         <div className={classes.bottom}>
-//           <h2 className={classes.title}>{event.name}</h2>
-//         </div>
-//       </CardActionArea>
-//     );
-//   }
-// }
