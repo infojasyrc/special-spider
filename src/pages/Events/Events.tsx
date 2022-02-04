@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from 'react'
-// import { withRouter } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 // import { withMessage } from '../../hocs/Snackbar'
 
@@ -36,6 +36,7 @@ export default function EventsPage(): JSX.Element {
   const apiConferences = ConferenceAPI()
 
   const { user } = useContext(UserContext)
+  const history = useHistory()
 
   const fetchHeadquarters = () => {
     setLoadingHeadquarters(true)
@@ -111,6 +112,10 @@ export default function EventsPage(): JSX.Element {
     fetchEvents()
   }
 
+  const handleEnterClicked = (event: Conference) => {
+    history.push(`/play-event/${event.id}`)
+  }
+
   return (
     <EventsView
       events={events}
@@ -121,6 +126,7 @@ export default function EventsPage(): JSX.Element {
       isAdmin={user?.isAdmin || false}
       changeHeadquarter={handleHeadquarterChanged}
       changeFilters={handleFiltersChanged}
+      onSelectedEvent={handleEnterClicked}
     ></EventsView>
   )
 }

@@ -111,7 +111,6 @@ export default function EventCard({
     //     if (!onSelectedEvent) {
     //       return;
     //     }
-    console.log('selected event: ', event)
     onSelectedEvent(event)
   }
 

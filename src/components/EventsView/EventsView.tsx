@@ -40,7 +40,7 @@ export interface EventsViewProps {
   // onOpen: () => void
   // onPause: () => void
   // onClose: () => void
-  // onSelected: () => void
+  onSelectedEvent: (event: Conference) => void
   changeHeadquarter: (headquarter: string) => void
   changeFilters: ({year, sortBy}: ConferenceFilters) => void
 }
@@ -55,13 +55,13 @@ export default function EventsView({
   // onOpen,
   // onPause,
   // onClose,
-  // onSelected,
+  onSelectedEvent,
   changeHeadquarter,
   changeFilters,
 }: EventsViewProps): JSX.Element {
   const classes = useStyles()
 
-  const handleSelected = () => {}
+  const handleSelected = (event: Conference) => onSelectedEvent(event)
 
   return (
     <FullLayout title="Special Spider App">

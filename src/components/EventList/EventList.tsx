@@ -19,7 +19,7 @@ export type EventListProps = {
   // onOpen: () => void
   // onPause: () => void
   // onClose: () => void
-  onSelected: () => void
+  onSelected: (event: Conference) => void
 }
 
 export default function EventList({
@@ -34,7 +34,7 @@ export default function EventList({
   // const handleOpen = () => onOpen
   // const handlePause = () => onPause
   // const handleClose = () => onClose
-  const handleSelected = () => onSelected
+  const handleSelected = (event: Conference) => onSelected(event)
 
   if (!events || events.length === 0) {
     return (
