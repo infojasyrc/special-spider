@@ -7,7 +7,7 @@ import LayoutContext from '../shared/contexts/LayoutContext'
 import NoneLayout from '../hocs/NoneLayout'
 import EventsApi from '../api/events'
 import Loading from './Loading/Loading'
-import Slider from './Slider'
+import Slider from './Slider/Slider'
 import { withMessage } from '../hocs/Snackbar'
 
 const styles = (theme) => ({
