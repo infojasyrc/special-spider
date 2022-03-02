@@ -16,7 +16,6 @@ const useStyles = makeStyles(() =>
     slider: {
       width: '100%',
       height: '100%',
-      position: 'relative',
       backgroundColor: colors.dark,
     },
     sliderWrapper: {

@@ -13,5 +13,15 @@ export const Empty = Template.bind({})
 Empty.args = {
   images: [],
   onFormClicked: () => {},
-  startPaused: false
+  startPaused: false,
+}
+
+export const With2Images = Template.bind({})
+With2Images.args = {
+  images: [
+    { id: '1', url: 'https://img.webnots.com/2014/04/110.png' },
+    { id: '2', url: 'https://img.webnots.com/2014/04/21.png' },
+  ],
+  onFormClicked: () => {},
+  startPaused: false,
 }
