@@ -3,7 +3,7 @@ import { createStyles, makeStyles, Button } from '@material-ui/core'
 
 import LeftArrow from './LeftArrow'
 import RightArrow from './RightArrow'
-import TimerButton from '../TimerButton'
+import TimerButton from './TimerButton'
 import SlideView from './SlideView'
 
 import { ImageMediaType } from '../../shared/entities'
@@ -44,13 +44,13 @@ const useStyles = makeStyles(() =>
 export interface SliderProps {
   images: ImageMediaType[]
   startPaused: boolean
-  onFormClick: () => void
+  onFormClicked: () => void
 }
 
 export default function Slider({
   images,
   startPaused,
-  onFormClick,
+  onFormClicked,
 }: SliderProps): JSX.Element {
   // const images = props.images.map((image) => {
   //   return { url: image.url, translateX: 0 }
@@ -100,7 +100,7 @@ export default function Slider({
         variant="contained"
         color="primary"
         size="large"
-        onClick={onFormClick}
+        onClick={onFormClicked}
       >
         Registrate
       </Button>

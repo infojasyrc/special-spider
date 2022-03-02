@@ -1,9 +1,21 @@
 import { Slide } from '@material-ui/core'
+import { createStyles, makeStyles } from '@material-ui/core'
 
 import CustomSlide from './CustomSlide'
 
 import { ImageMediaType } from '../../shared/entities'
 import { CustomSlideDirection } from './types'
+
+const useStyles = makeStyles(() =>
+  createStyles({
+    slide: {
+      width: '100%',
+      height: '100%',
+      top: 0,
+      position: 'absolute',
+    },
+  })
+)
 
 export interface SlideViewProps {
   images: ImageMediaType[]
@@ -16,11 +28,26 @@ export default function SlideView({
   currentIndex,
   direction,
 }: SlideViewProps): JSX.Element {
+  const classes = useStyles()
+
+  const getSlideStyle = (image: string, isEntering: boolean) => {
+    return {
+      backgroundImage: `url(${image})`,
+      backgroundSize: 'cover',
+      backgroundRepeat: 'no-repeat',
+      backgroundPosition: '50% 60%',
+      zIndex: isEntering ? 1 : 0,
+    }
+  }
+
   const components = images.map((image, index) => {
     if (index === currentIndex) {
       return (
         <Slide key={index} direction={direction} in={true} timeout={500}>
-          <CustomSlide key={index} image={image.url} isEntering={true} />
+          <div
+            style={getSlideStyle(image.url, true)}
+            className={classes.slide}
+          />
         </Slide>
       )
     }
@@ -48,5 +75,5 @@ export default function SlideView({
     return <></>
   })
 
-  return <>{components}</>
+  return <div data-testid="slider-section">{components}</div>
 }

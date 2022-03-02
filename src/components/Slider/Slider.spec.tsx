@@ -9,7 +9,7 @@ describe('slider component', () => {
     const sliderProps: SliderProps = {
       images: [],
       startPaused: false,
-      onFormClick: jest.fn(),
+      onFormClicked: jest.fn(),
     }
     renderComponent(sliderProps)
 
