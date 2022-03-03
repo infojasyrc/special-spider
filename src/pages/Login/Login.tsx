@@ -27,6 +27,18 @@ export default function LoginPage(): JSX.Element {
     // hideMessage()
     // showMessage('Loging in')
 
+    //  componentDidMount() {
+    //     const values = queryString.parse(this.props.location.search)
+
+    //     if (values.redirect_uri) {
+    //       this.setState({ redirectURL: values.redirect_uri })
+    //     }
+
+    //     if (values.state) {
+    //       this.setState({ state: values.state })
+    //     }
+    //  }
+
     setLoading(true)
 
     api.login({ email: userName, password })
@@ -56,37 +68,3 @@ export default function LoginPage(): JSX.Element {
 
   return <Login onLogin={handleLoginClicked} loading={loading} />
 }
-
-// class LoginPage extends Component {
-//   constructor(props) {
-//     super(props)
-
-//     this.state = {
-//       loading: false,
-//       redirectURL: null,
-//       state: '',
-//     }
-
-//     this.api = Authentication()
-//   }
-
-//   componentDidMount() {
-//     const values = queryString.parse(this.props.location.search)
-
-//     if (values.redirect_uri) {
-//       this.setState({ redirectURL: values.redirect_uri })
-//     }
-
-//     if (values.state) {
-//       this.setState({ state: values.state })
-//     }
-//   }
-
-//   render() {
-//     return <Login onLogin={this.handleLoginClicked} />
-//   }
-// }
-
-// LoginPage.contextType = UserContext
-
-// export default withMessage(withRouter(withStyles(styles)(LoginPage)))

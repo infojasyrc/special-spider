@@ -63,6 +63,7 @@ export default function DrawerMenu({
 }: DrawerMenuProps): JSX.Element {
   const classes = useStyles()
   const { user } = useContext(UserContext)
+
   return (
     <Drawer open={open} onClose={onClose}>
       <div className={classes.drawerTop}>
