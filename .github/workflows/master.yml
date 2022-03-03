@@ -1,5 +1,0 @@
-name: Build and Deploy for Development
-on:
-  push:
-    branches:
-      - master
