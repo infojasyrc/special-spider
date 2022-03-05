@@ -22,12 +22,12 @@ export interface LoadingProps {
 export default function Loading({ isLoading }: LoadingProps): JSX.Element {
   const classes = useStyles()
 
-  if (isLoading) {
+  if (!isLoading) {
     return <></>
   }
 
   return (
-    <div className={classes.container}>
+    <div className={classes.container} data-testid="loader">
       <CircularProgress className={classes.waiting} size={100} />
     </div>
   )
