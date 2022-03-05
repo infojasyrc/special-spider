@@ -8,7 +8,7 @@ import {
   withStyles
 } from '@material-ui/core';
 
-import LoadingWrapper from './LoadingWrapper';
+import LoadingWrapper from './Loading/LoadingWrapper';
 import {baseStyles} from '../styles/Base';
 
 const styles = theme => ({
@@ -34,7 +34,7 @@ class SelectWithLoading extends Component {
     if (!values) {
       return (
         <LoadingWrapper
-          loading={true}
+          isLoading={true}
           middlePosition={{
           top: '30px',
           left: '190px'
