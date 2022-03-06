@@ -1,7 +1,7 @@
-import { createMuiTheme } from '@material-ui/core/styles'
+import { createTheme } from '@material-ui/core/styles'
 import { colors } from './theme/colors'
 
-export const theme = createMuiTheme({
+export const theme = createTheme({
   barTitle: {
     marginLeft: '0',
     fontFamily: 'Exo',
