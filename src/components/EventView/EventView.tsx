@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { createStyles, makeStyles, Grid } from '@material-ui/core'
 
 import EventTypes from '../EventTypes/EventTypes'
+import SelectWithLoading from '../DropDown/SelectWithLoading'
 
 import { Headquarter } from '../../shared/entities'
 
@@ -15,10 +16,17 @@ const useStyles = makeStyles(() =>
 
 export interface EventViewProps {
   headquarters: Headquarter[]
+  headquarter: string
   eventType: string
+  isLoading: boolean
 }
 
-export default function EventView({ eventType }: EventViewProps): JSX.Element {
+export default function EventView({
+  headquarters,
+  headquarter,
+  eventType,
+  isLoading,
+}: EventViewProps): JSX.Element {
   const [selectedEventType, setSelectedEventType] = useState(eventType)
 
   const classes = useStyles()
@@ -26,6 +34,10 @@ export default function EventView({ eventType }: EventViewProps): JSX.Element {
   const updateEventType = (selectedEventType: string) => {
     setSelectedEventType(selectedEventType)
   }
+
+  const handleHeadquarterChanged = () => {}
+
+  const handleRequiredFieldBlurred = () => {}
 
   return (
     <Grid container className={classes.container}>
@@ -43,7 +55,18 @@ export default function EventView({ eventType }: EventViewProps): JSX.Element {
         /> */}
       </Grid>
       <Grid item xs={12} sm={6}>
-        {/* {this.renderHeadquarters()} */}
+        <SelectWithLoading
+          attributeValue={headquarter}
+          attributeRequired={true}
+          attributeOptions={headquarters}
+          attributeName="headquarter"
+          attributeLabel="HQ"
+          error={false}
+          errorMessage=""
+          onChange={handleHeadquarterChanged}
+          onBlur={handleRequiredFieldBlurred}
+          isLoading={isLoading}
+        />
       </Grid>
       <Grid item xs={12} sm={6}>
         {/* {this.renderUsers()} */}
