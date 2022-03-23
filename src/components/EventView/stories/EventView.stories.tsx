@@ -16,4 +16,6 @@ Empty.args = {
     { id: '1', name: 'Piura' },
     { id: '2', name: 'Lima' },
   ],
+  headquarter: '',
+  isLoading: false,
 }

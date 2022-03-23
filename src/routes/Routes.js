@@ -2,11 +2,12 @@ import React, { Component } from 'react'
 import { Route } from 'react-router-dom'
 
 import EventsPage from '../pages/Events/Events'
+import EventPage from '../pages/Event/Event'
 import PlayEventPage from '../pages/PlayEvent/PlayEvent'
 import OauthDashboard from '../components/Dashboard/OauthDashboard'
 import Users from '../components/Users'
 import CreateUpdateUser from '../components/CreateUpdateUser'
-import CreateUpdateEvent from '../components/CreateUpdateEvent'
+// import CreateUpdateEvent from '../components/CreateUpdateEvent'
 // import Event from '../components/Event'
 import AttendeeForm from '../components/AttendeeForm'
 import ExportAttendees from '../components/ExportAttendees'
@@ -36,12 +37,12 @@ class Routes extends Component {
         <Route
           exact
           path="/event/add"
-          render={() => <CreateUpdateEvent isAdding={true} />}
+          render={() => <EventPage isAdding={true} />}
         />
         <Route
           exact
           path="/event/update/:id"
-          render={() => <CreateUpdateEvent isAdding={false} />}
+          render={() => <EventPage isAdding={false} />}
         />
         {/* <Route exact path='/play-event/:id' component={Event}/> */}
         <Route exact path="/play-event/:id" component={PlayEventPage} />

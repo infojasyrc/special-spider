@@ -8,8 +8,13 @@ const renderComponent = (props: EventViewProps) =>
 describe('event view component', () => {
   it('should render all elements', () => {
     const props: EventViewProps = {
-      headquarters: [],
+      headquarters: [
+        { id: 'piura', name: 'Piura' },
+        { id: 'lima', name: 'Lima' },
+      ],
+      headquarter: '',
       eventType: '',
+      isLoading: false,
     }
     renderComponent(props)
 
