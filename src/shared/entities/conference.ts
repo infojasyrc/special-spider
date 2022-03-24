@@ -16,3 +16,13 @@ export interface ConferenceFilters {
   year: string
   sortBy: string
 }
+
+export interface DataValidation {
+  error: boolean
+  message?: string
+}
+
+export interface ConferenceDataValidation {
+  name: DataValidation
+  date: DataValidation
+}

@@ -33,12 +33,20 @@ export default function EventPage(): JSX.Element {
     /* eslint-disable */
   }, [])
 
+  const onChangeEventName = () => {}
+
   return (
     <EventView
       eventType=""
+      eventName=""
       headquarters={allHeadquarters}
       headquarter=""
       isLoading={loading}
+      validation={{
+        name: { error: false, message: '' },
+        date: { error: false, message: '' },
+      }}
+      onChangeEventName={onChangeEventName}
     />
   )
 }

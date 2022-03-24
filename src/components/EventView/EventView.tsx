@@ -3,8 +3,9 @@ import { createStyles, makeStyles, Grid } from '@material-ui/core'
 
 import EventTypes from '../EventTypes/EventTypes'
 import SelectWithLoading from '../DropDown/SelectWithLoading'
+import TextFieldWithValidation from '../TextField/TextFieldWithValidation'
 
-import { Headquarter } from '../../shared/entities'
+import { ConferenceDataValidation, Headquarter } from '../../shared/entities'
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -18,14 +19,20 @@ export interface EventViewProps {
   headquarters: Headquarter[]
   headquarter: string
   eventType: string
+  eventName: string
+  validation: ConferenceDataValidation
   isLoading: boolean
+  onChangeEventName: () => void
 }
 
 export default function EventView({
   headquarters,
   headquarter,
   eventType,
+  eventName,
+  validation,
   isLoading,
+  onChangeEventName,
 }: EventViewProps): JSX.Element {
   const [selectedEventType, setSelectedEventType] = useState(eventType)
 
@@ -37,22 +44,26 @@ export default function EventView({
 
   const handleHeadquarterChanged = () => {}
 
+  const handleEventNameChanged = () => {
+    onChangeEventName()
+  }
+
   const handleRequiredFieldBlurred = () => {}
 
   return (
     <Grid container className={classes.container}>
       <Grid item xs={12} sm={6}>
-        {/* <TextFieldWithValidation
+        <TextFieldWithValidation
           id="name"
           className={classes.textField}
           required={true}
           label="Title"
-          value={name}
+          value={eventName}
           error={validation.name.error}
-          errorMessage={validation.name.message}
-          onChange={this.handleTextChanged}
-          onBlur={this.handleRequiredFieldBlurred}
-        /> */}
+          helperText={validation.name.message}
+          onChange={handleEventNameChanged}
+          onBlur={handleRequiredFieldBlurred}
+        />
       </Grid>
       <Grid item xs={12} sm={6}>
         <SelectWithLoading

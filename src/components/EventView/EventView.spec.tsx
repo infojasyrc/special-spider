@@ -14,11 +14,17 @@ describe('event view component', () => {
       ],
       headquarter: '',
       eventType: '',
+      eventName: '',
       isLoading: false,
+      validation: { name: { error: false }, date: { error: false } },
+      onChangeEventName: jest.fn(),
     }
     renderComponent(props)
 
+    const eventName = screen.getByText(/title/i)
     const salesEventType = screen.getByRole('radio', { name: /sales/i })
+    
+    expect(eventName).toBeInTheDocument()
     expect(salesEventType).toBeInTheDocument()
   })
 })
