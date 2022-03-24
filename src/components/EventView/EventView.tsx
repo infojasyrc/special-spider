@@ -126,19 +126,6 @@ export default function EventView({
         />
       </Grid>
       <Grid item xs={12} sm={6}>
-        {/* {this.renderUsers()} */}
-      </Grid>
-      <Grid item xs={12} sm={6}>
-        {/* <TextField
-          name="placeName"
-          className={classes.textField}
-          label="Place"
-          value={placeName}
-          margin="dense"
-          onChange={this.handleTextChanged}
-        /> */}
-      </Grid>
-      <Grid item xs={12} sm={6}>
         <TextField
           id="eventAddress"
           name="address"
@@ -164,6 +151,19 @@ export default function EventView({
           selectedEventType={selectedEventType}
           onUpdateEventType={updateEventType}
         />
+      </Grid>
+      <Grid item xs={12} sm={6}>
+        {/* <TextField
+          name="placeName"
+          className={classes.textField}
+          label="Place"
+          value={placeName}
+          margin="dense"
+          onChange={this.handleTextChanged}
+        /> */}
+      </Grid>
+      <Grid item xs={12} sm={6}>
+        {/* {this.renderUsers()} */}
       </Grid>
     </Grid>
   )
