@@ -14,6 +14,7 @@ Empty.args = {
   eventType: '',
   eventName: '',
   eventDate: '',
+  address: '',
   headquarters: [
     { id: '1', name: 'Piura' },
     { id: '2', name: 'Lima' },
@@ -25,4 +26,6 @@ Empty.args = {
     date: { error: false, message: '' },
   },
   onChangeEventName: () => {},
+  onChangeEventDate: () => {},
+  onChangeAddress: () => {},
 }

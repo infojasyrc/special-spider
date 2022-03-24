@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { createStyles, makeStyles, Grid } from '@material-ui/core'
+import { createStyles, makeStyles, Grid, TextField } from '@material-ui/core'
 
 import EventTypes from '../EventTypes/EventTypes'
 import SelectWithLoading from '../DropDown/SelectWithLoading'
@@ -21,10 +21,12 @@ export interface EventViewProps {
   eventType: string
   eventName: string
   eventDate: string
+  address: string
   validation: ConferenceDataValidation
   isLoading: boolean
   onChangeEventName: () => void
   onChangeEventDate: () => void
+  onChangeAddress: () => void
 }
 
 export default function EventView({
@@ -33,10 +35,12 @@ export default function EventView({
   eventType,
   eventName,
   eventDate,
+  address,
   validation,
   isLoading,
   onChangeEventName,
   onChangeEventDate,
+  onChangeAddress,
 }: EventViewProps): JSX.Element {
   const [selectedEventType, setSelectedEventType] = useState(eventType)
 
@@ -54,6 +58,10 @@ export default function EventView({
 
   const handleDateChanged = () => {
     onChangeEventDate()
+  }
+
+  const handleAddressChange = () => {
+    onChangeAddress()
   }
 
   const handleRequiredFieldBlurred = () => {}
@@ -118,14 +126,15 @@ export default function EventView({
         /> */}
       </Grid>
       <Grid item xs={12} sm={6}>
-        {/* <TextField
+        <TextField
+          id="eventAddress"
           name="address"
           className={classes.textField}
           label="Address"
           value={address}
           margin="dense"
-          onChange={this.handleTextChanged}
-        /> */}
+          onChange={handleAddressChange}
+        />
       </Grid>
       <Grid item xs={12} sm={6}>
         {/* <TextField
