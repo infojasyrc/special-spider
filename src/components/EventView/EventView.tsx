@@ -20,9 +20,11 @@ export interface EventViewProps {
   headquarter: string
   eventType: string
   eventName: string
+  eventDate: string
   validation: ConferenceDataValidation
   isLoading: boolean
   onChangeEventName: () => void
+  onChangeEventDate: () => void
 }
 
 export default function EventView({
@@ -30,9 +32,11 @@ export default function EventView({
   headquarter,
   eventType,
   eventName,
+  eventDate,
   validation,
   isLoading,
   onChangeEventName,
+  onChangeEventDate,
 }: EventViewProps): JSX.Element {
   const [selectedEventType, setSelectedEventType] = useState(eventType)
 
@@ -48,13 +52,17 @@ export default function EventView({
     onChangeEventName()
   }
 
+  const handleDateChanged = () => {
+    onChangeEventDate()
+  }
+
   const handleRequiredFieldBlurred = () => {}
 
   return (
     <Grid container className={classes.container}>
       <Grid item xs={12} sm={6}>
         <TextFieldWithValidation
-          id="name"
+          id="eventName"
           className={classes.textField}
           required={true}
           label="Title"
@@ -62,6 +70,23 @@ export default function EventView({
           error={validation.name.error}
           helperText={validation.name.message}
           onChange={handleEventNameChanged}
+          onBlur={handleRequiredFieldBlurred}
+        />
+      </Grid>
+      <Grid item xs={12} sm={6}>
+        <TextFieldWithValidation
+          id="eventDate"
+          className={classes.textField}
+          required={true}
+          label="Date"
+          value={eventDate}
+          error={validation.date.error}
+          helperText={validation.date.message}
+          type="datetime-local"
+          InputLabelProps={{
+            shrink: true,
+          }}
+          onChange={handleDateChanged}
           onBlur={handleRequiredFieldBlurred}
         />
       </Grid>
@@ -81,23 +106,6 @@ export default function EventView({
       </Grid>
       <Grid item xs={12} sm={6}>
         {/* {this.renderUsers()} */}
-      </Grid>
-      <Grid item xs={12} sm={6}>
-        {/* <TextFieldWithValidation
-          id="date"
-          className={classes.textField}
-          required={true}
-          label="Date"
-          value={date}
-          error={validation.date.error}
-          errorMessage={validation.date.message}
-          type="datetime-local"
-          InputLabelProps={{
-            shrink: true,
-          }}
-          onChange={this.handleDateChanged}
-          onBlur={this.handleRequiredFieldBlurred}
-        /> */}
       </Grid>
       <Grid item xs={12} sm={6}>
         {/* <TextField

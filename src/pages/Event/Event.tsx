@@ -34,11 +34,13 @@ export default function EventPage(): JSX.Element {
   }, [])
 
   const onChangeEventName = () => {}
+  const onChangeEventDate = () => {}
 
   return (
     <EventView
       eventType=""
       eventName=""
+      eventDate=""
       headquarters={allHeadquarters}
       headquarter=""
       isLoading={loading}
@@ -47,6 +49,7 @@ export default function EventPage(): JSX.Element {
         date: { error: false, message: '' },
       }}
       onChangeEventName={onChangeEventName}
+      onChangeEventDate={onChangeEventDate}
     />
   )
 }

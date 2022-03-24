@@ -12,7 +12,8 @@ const Template: Story<EventViewProps> = (args) => <EventView {...args} />
 export const Empty = Template.bind({})
 Empty.args = {
   eventType: '',
-  eventName: 'New Event',
+  eventName: '',
+  eventDate: '',
   headquarters: [
     { id: '1', name: 'Piura' },
     { id: '2', name: 'Lima' },
