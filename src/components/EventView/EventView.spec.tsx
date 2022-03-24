@@ -17,11 +17,13 @@ describe('event view component', () => {
       eventName: '',
       eventDate: '',
       address: '',
+      phoneNumber: '',
       isLoading: false,
       validation: { name: { error: false }, date: { error: false } },
       onChangeEventName: jest.fn(),
       onChangeEventDate: jest.fn(),
       onChangeAddress: jest.fn(),
+      onChangePhoneNumber: jest.fn(),
     }
     renderComponent(props)
 

@@ -36,6 +36,7 @@ export default function EventPage(): JSX.Element {
   const onChangeEventName = () => {}
   const onChangeEventDate = () => {}
   const onChangeAddress = () => {}
+  const onChangePhoneNumber = () => {}
 
   return (
     <EventView
@@ -43,6 +44,7 @@ export default function EventPage(): JSX.Element {
       eventName=""
       eventDate=""
       address=""
+      phoneNumber=""
       headquarters={allHeadquarters}
       headquarter=""
       isLoading={loading}
@@ -53,6 +55,7 @@ export default function EventPage(): JSX.Element {
       onChangeEventName={onChangeEventName}
       onChangeEventDate={onChangeEventDate}
       onChangeAddress={onChangeAddress}
+      onChangePhoneNumber={onChangePhoneNumber}
     />
   )
 }

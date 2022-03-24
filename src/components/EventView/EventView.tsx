@@ -9,8 +9,13 @@ import { ConferenceDataValidation, Headquarter } from '../../shared/entities'
 
 const useStyles = makeStyles(() =>
   createStyles({
-    container: { border: '1px solid #c00' },
-    textField: {},
+    container: {
+      flexFlow: 'column',
+      textAlign: 'center',
+    },
+    textField: {
+      width: '100%',
+    },
     wideInput: {},
   })
 )
@@ -22,11 +27,13 @@ export interface EventViewProps {
   eventName: string
   eventDate: string
   address: string
+  phoneNumber: string
   validation: ConferenceDataValidation
   isLoading: boolean
   onChangeEventName: () => void
   onChangeEventDate: () => void
   onChangeAddress: () => void
+  onChangePhoneNumber: () => void
 }
 
 export default function EventView({
@@ -36,11 +43,13 @@ export default function EventView({
   eventName,
   eventDate,
   address,
+  phoneNumber,
   validation,
   isLoading,
   onChangeEventName,
   onChangeEventDate,
   onChangeAddress,
+  onChangePhoneNumber,
 }: EventViewProps): JSX.Element {
   const [selectedEventType, setSelectedEventType] = useState(eventType)
 
@@ -62,6 +71,10 @@ export default function EventView({
 
   const handleAddressChange = () => {
     onChangeAddress()
+  }
+
+  const handlePhoneNumberChange = () => {
+    onChangePhoneNumber()
   }
 
   const handleRequiredFieldBlurred = () => {}
@@ -137,14 +150,14 @@ export default function EventView({
         />
       </Grid>
       <Grid item xs={12} sm={6}>
-        {/* <TextField
+        <TextField
           name="phoneNumber"
           className={classes.textField}
           label="Phone"
           value={phoneNumber}
           margin="dense"
-          onChange={this.handleTextChanged}
-        /> */}
+          onChange={handlePhoneNumberChange}
+        />
       </Grid>
       <Grid item xs={12} sm={6}>
         <EventTypes
