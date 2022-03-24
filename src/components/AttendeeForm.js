@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {withRouter} from 'react-router-dom';
+import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
 import {
   withStyles,
   Grid,
@@ -10,19 +10,19 @@ import {
   Button,
   FormGroup,
   Dialog,
-  DialogContent
-} from '@material-ui/core';
+  DialogContent,
+} from '@material-ui/core'
 
-import AttendeeFormHeaderStep from './AttendeeFormHeaderStep/AttendeeFormHeaderStep';
-import NavigationLayout from '../hocs/NavigationLayout';
-import TextFieldWithValidation from './TextFieldWithValidation';
-import {withMessage} from '../hocs/Snackbar';
+import AttendeeFormHeaderStep from './AttendeeFormHeaderStep/AttendeeFormHeaderStep'
+import NavigationLayout from '../hocs/NavigationLayout'
+import TextFieldWithValidation from './TextField/TextFieldWithValidation'
+import { withMessage } from '../hocs/Snackbar'
 
-import EventsApi from '../api/events';
-import database from '../database/database';
-import DataService from '../database/dataService';
-import {uuidv4, validateEmail} from '../tools';
-import {styles} from '../styles/AttendeeForm';
+import EventsApi from '../api/events'
+import database from '../database/database'
+import DataService from '../database/dataService'
+import { uuidv4, validateEmail } from '../tools'
+import { styles } from '../styles/AttendeeForm'
 
 const strings = {
   title: 'Formulario',
@@ -52,12 +52,12 @@ const strings = {
   next: 'Siguiente',
   back: 'Atrás',
   accept: 'Aceptar',
-  cancel: 'Cancel'
+  cancel: 'Cancel',
 }
 
 class AttendeeForm extends Component {
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
       event: {},
@@ -89,79 +89,83 @@ class AttendeeForm extends Component {
       validation: {
         firstName: {
           error: false,
-          message: strings.youMustEnterData
+          message: strings.youMustEnterData,
         },
         lastName: {
           error: false,
-          message: strings.youMustEnterData
+          message: strings.youMustEnterData,
         },
         email: {
           error: false,
-          message: strings.youMustEnterData
+          message: strings.youMustEnterData,
         },
         phoneNumber: {
           error: false,
-          message: strings.youMustEnterData
-        }
-      }
-    };
+          message: strings.youMustEnterData,
+        },
+      },
+    }
 
-    this.api = new EventsApi();
-    this.db = new DataService(database, 'attendees');
+    this.api = new EventsApi()
+    this.db = new DataService(database, 'attendees')
   }
 
   componentDidMount = () => {
-    const {match, showLoading, hideMessage} = this.props;
-    const id = match.params.id;
+    const { match, showLoading, hideMessage } = this.props
+    const id = match.params.id
 
-    showLoading();
+    showLoading()
 
-    this.api.getById(id)
-      .then(event => {
-        this.setState({
-          event: event
-        }, () => {
-          hideMessage();
-        });
+    this.api
+      .getById(id)
+      .then((event) => {
+        this.setState(
+          {
+            event: event,
+          },
+          () => {
+            hideMessage()
+          }
+        )
       })
-      .catch(error => {
-        console.error(error);
-        hideMessage();
-      });
+      .catch((error) => {
+        console.error(error)
+        hideMessage()
+      })
   }
 
   isRecruitingEvent = () => {
-    const {event} = this.state;
-    return event.eventType === 'recruiting';
+    const { event } = this.state
+    return event.eventType === 'recruiting'
   }
 
   handleTextChanged = (e) => {
     this.setState({
-      [e.target.name]: e.target.value
-    });
+      [e.target.name]: e.target.value,
+    })
   }
 
   handleCheckBoxChanged = (e) => {
     this.setState({
-      [e.target.name]: e.target.checked
-    });
+      [e.target.name]: e.target.checked,
+    })
   }
 
   handleNextClicked = () => {
-    this.setState({activeStep: 2});
+    this.setState({ activeStep: 2 })
   }
 
   handleBackClicked = () => {
-    this.setState({activeStep: 1});
+    this.setState({ activeStep: 1 })
   }
 
   backToSlides = () => {
-    const {history, match} = this.props;
-    history.push(`/play-event/${match.params.id}`);
+    const { history, match } = this.props
+    history.push(`/play-event/${match.params.id}`)
   }
 
   handleCancelClicked = () => {
-    this.backToSlides();
+    this.backToSlides()
   }
 
   handleSaveClicked = () => {
@@ -186,15 +190,15 @@ class AttendeeForm extends Component {
       noExperience,
       moreThanFive,
       oneToThree,
-      scrumLeader
-    } = this.state;
-    const {match, showSaving, hideMessage} = this.props;
+      scrumLeader,
+    } = this.state
+    const { match, showSaving, hideMessage } = this.props
 
-    showSaving();
-    this.setState({isLoading: true});
+    showSaving()
+    this.setState({ isLoading: true })
 
-    const idEvent = match.params.id;
-    const id = uuidv4();
+    const idEvent = match.params.id
+    const id = uuidv4()
 
     const attendee = {
       id,
@@ -219,135 +223,158 @@ class AttendeeForm extends Component {
       noExperience,
       moreThanFive,
       oneToThree,
-      scrumLeader
-    };
+      scrumLeader,
+    }
 
-    this.db.add(attendee)
+    this.db
+      .add(attendee)
       .then(() => {
-        this.api.addAttendees(idEvent, [attendee])
+        this.api
+          .addAttendees(idEvent, [attendee])
           .then(() => {
-            this.db.delete(id)
+            this.db
+              .delete(id)
               .then(() => {
-                this.setState({
-                  isLoading: false,
-                  activeStep: this.isRecruitingEvent() ? 2 : 1,
-                  showThanks: true
-                }, () => {
-                  hideMessage();
-                });
+                this.setState(
+                  {
+                    isLoading: false,
+                    activeStep: this.isRecruitingEvent() ? 2 : 1,
+                    showThanks: true,
+                  },
+                  () => {
+                    hideMessage()
+                  }
+                )
               })
-              .catch(error => {
-                console.error('Error while deleting attendee from IndexedDb', error);
-                hideMessage();
-              });
+              .catch((error) => {
+                console.error(
+                  'Error while deleting attendee from IndexedDb',
+                  error
+                )
+                hideMessage()
+              })
           })
-          .catch(error => {
-            console.error('Error while uploading attendee to server', error);
-            this.setState({
-              isLoading: false,
-              activeStep: 2,
-              showThanks: true
-            }, () => hideMessage());
-          });
+          .catch((error) => {
+            console.error('Error while uploading attendee to server', error)
+            this.setState(
+              {
+                isLoading: false,
+                activeStep: 2,
+                showThanks: true,
+              },
+              () => hideMessage()
+            )
+          })
       })
-      .catch(error => {
-        console.error('Error while saving attendee to IndexedDb', error);
-        this.setState({
-          isLoading: false
-        }, () => hideMessage());
-      });
+      .catch((error) => {
+        console.error('Error while saving attendee to IndexedDb', error)
+        this.setState(
+          {
+            isLoading: false,
+          },
+          () => hideMessage()
+        )
+      })
   }
 
   handleAcceptClicked = () => {
-    this.backToSlides();
+    this.backToSlides()
   }
 
   checkValidation = () => {
-    const {validation} = this.state;
+    const { validation } = this.state
 
     for (let key in validation) {
       if (!validation.hasOwnProperty(key)) {
-        continue;
+        continue
       }
 
       if (validation[key].error) {
-        return false;
+        return false
       }
     }
 
-    return true;
+    return true
   }
 
   handleRequiredFieldBlurred = (e) => {
-    const {validation} = this.state;
-    validation[e.target.name].error = !e.target.value || e.target.value === '';
+    const { validation } = this.state
+    validation[e.target.name].error = !e.target.value || e.target.value === ''
 
     if (e.target.id === 'email' && e.target.value.length > 0) {
-      validation[e.target.name].error = !validateEmail(e.target.value);
+      validation[e.target.name].error = !validateEmail(e.target.value)
     }
-    const enableSave = this.checkValidation();
-    this.setState({validation, enableSave});
+    const enableSave = this.checkValidation()
+    this.setState({ validation, enableSave })
   }
 
   renderRequiredTextField = (inputTextData) => {
-    const {classes} = this.props;
+    const { classes } = this.props
 
     if (inputTextData.type) {
-      return (<TextFieldWithValidation
+      return (
+        <TextFieldWithValidation
+          id={inputTextData.id}
+          type={inputTextData.type}
+          className={classes.textField}
+          variant="outlined"
+          required={true}
+          label={inputTextData.label}
+          value={inputTextData.value}
+          error={inputTextData.error}
+          errorMessage={inputTextData.errorMessage}
+          onChange={this.handleTextChanged}
+          onBlur={this.handleRequiredFieldBlurred}
+        />
+      )
+    }
+
+    return (
+      <TextFieldWithValidation
         id={inputTextData.id}
-        type={inputTextData.type}
         className={classes.textField}
         variant="outlined"
         required={true}
         label={inputTextData.label}
         value={inputTextData.value}
         error={inputTextData.error}
-        errorMessage={inputTextData.errorMessage}
+        helperText={inputTextData.errorMessage}
         onChange={this.handleTextChanged}
-        onBlur={this.handleRequiredFieldBlurred}/>);
-    }
-
-    return (<TextFieldWithValidation
-      id={inputTextData.id}
-      className={classes.textField}
-      variant="outlined"
-      required={true}
-      label={inputTextData.label}
-      value={inputTextData.value}
-      error={inputTextData.error}
-      errorMessage={inputTextData.errorMessage}
-      onChange={this.handleTextChanged}
-      onBlur={this.handleRequiredFieldBlurred}/>);
+        onBlur={this.handleRequiredFieldBlurred}
+      />
+    )
   }
 
   renderTextField = (name, label, value) => {
-    const {classes} = this.props;
-    return (<TextField
-      name={name}
-      className={classes.textField}
-      label={label}
-      value={value}
-      margin="dense"
-      variant="outlined"
-      onChange={this.handleTextChanged}/>);
+    const { classes } = this.props
+    return (
+      <TextField
+        name={name}
+        className={classes.textField}
+        label={label}
+        value={value}
+        margin="dense"
+        variant="outlined"
+        onChange={this.handleTextChanged}
+      />
+    )
   }
 
   renderCheckBox = (name, checked, label) => {
     return (
       <FormGroup>
         <FormControlLabel
-          control=
-          {<Checkbox name={name
-      }
-      checked = {
-        checked
-      }
-      onChange = {
-        this.handleCheckBoxChanged
-      } />}
-          label={label}/>
+          control={
+            <Checkbox
+              name={name}
+              checked={checked}
+              onChange={this.handleCheckBoxChanged}
+            />
+          }
+          label={label}
+        />
       </FormGroup>
-    );
+    )
   }
 
   renderPersonalData = () => {
@@ -359,17 +386,29 @@ class AttendeeForm extends Component {
       company,
       position,
       university,
-      validation
-    } = this.state;
+      validation,
+    } = this.state
 
     return (
       <Grid container>
         <Grid container direction="row" spacing={32}>
           <Grid item xs={12} sm={6}>
-            {this.renderRequiredTextField({id: 'firstName', label: strings.firstName, value: firstName, error: validation.firstName.error, errorMessage: validation.firstName.message})}
+            {this.renderRequiredTextField({
+              id: 'firstName',
+              label: strings.firstName,
+              value: firstName,
+              error: validation.firstName.error,
+              errorMessage: validation.firstName.message,
+            })}
           </Grid>
           <Grid item xs={12} sm={6}>
-            {this.renderRequiredTextField({id: 'lastName', label: strings.lastName, value: lastName, error: validation.lastName.error, errorMessage: validation.lastName.message})}
+            {this.renderRequiredTextField({
+              id: 'lastName',
+              label: strings.lastName,
+              value: lastName,
+              error: validation.lastName.error,
+              errorMessage: validation.lastName.message,
+            })}
           </Grid>
         </Grid>
         <Grid container direction="row" spacing={32}>
@@ -380,11 +419,17 @@ class AttendeeForm extends Component {
               label: strings.email,
               value: email,
               error: validation.email.error,
-              errorMessage: validation.email.message
+              errorMessage: validation.email.message,
             })}
           </Grid>
           <Grid item xs={12} sm={6}>
-            {this.renderRequiredTextField({id: 'phoneNumber', label: strings.phoneNumber, value: phoneNumber, error: validation.phoneNumber.error, errorMessage: validation.phoneNumber.message})}
+            {this.renderRequiredTextField({
+              id: 'phoneNumber',
+              label: strings.phoneNumber,
+              value: phoneNumber,
+              error: validation.phoneNumber.error,
+              errorMessage: validation.phoneNumber.message,
+            })}
           </Grid>
         </Grid>
         <Grid container direction="row" spacing={32}>
@@ -396,27 +441,22 @@ class AttendeeForm extends Component {
           </Grid>
         </Grid>
         {this.isRecruitingEvent() ? (
-        <Grid container direction="row">
-          <Grid item xs={12}>
-            {this.renderTextField('university', strings.university, university)}
+          <Grid container direction="row">
+            <Grid item xs={12}>
+              {this.renderTextField(
+                'university',
+                strings.university,
+                university
+              )}
+            </Grid>
           </Grid>
-        </Grid>
         ) : null}
       </Grid>
-    );
+    )
   }
 
   renderTechnologies = () => {
-    const {
-      java,
-      ui,
-      qa,
-      php,
-      mobile,
-      fullStack,
-      dotNet,
-      others
-    } = this.state;
+    const { java, ui, qa, php, mobile, fullStack, dotNet, others } = this.state
 
     return (
       <Grid container>
@@ -458,7 +498,7 @@ class AttendeeForm extends Component {
           </Grid>
         </Grid>
       </Grid>
-    );
+    )
   }
 
   renderExperience = () => {
@@ -468,8 +508,8 @@ class AttendeeForm extends Component {
       noExperience,
       moreThanFive,
       oneToThree,
-      scrumLeader
-    } = this.state;
+      scrumLeader,
+    } = this.state
 
     return (
       <Grid container>
@@ -483,7 +523,11 @@ class AttendeeForm extends Component {
             {this.renderCheckBox('student', student, strings.student)}
           </Grid>
           <Grid item xs={12} sm={6}>
-            {this.renderCheckBox('noExperience', noExperience, strings.noExperience)}
+            {this.renderCheckBox(
+              'noExperience',
+              noExperience,
+              strings.noExperience
+            )}
           </Grid>
         </Grid>
         <Grid container direction="row">
@@ -491,23 +535,35 @@ class AttendeeForm extends Component {
             {this.renderCheckBox('oneToThree', oneToThree, strings.oneToThree)}
           </Grid>
           <Grid item xs={12} sm={6}>
-            {this.renderCheckBox('threeToFive', threeToFive, strings.threeToFive)}
+            {this.renderCheckBox(
+              'threeToFive',
+              threeToFive,
+              strings.threeToFive
+            )}
           </Grid>
         </Grid>
         <Grid container direction="row">
           <Grid item xs={12} sm={6}>
-            {this.renderCheckBox('moreThanFive', moreThanFive, strings.moreThanFive)}
+            {this.renderCheckBox(
+              'moreThanFive',
+              moreThanFive,
+              strings.moreThanFive
+            )}
           </Grid>
           <Grid item xs={12} sm={6}>
-            {this.renderCheckBox('scrumLeader', scrumLeader, strings.scrumLeader)}
+            {this.renderCheckBox(
+              'scrumLeader',
+              scrumLeader,
+              strings.scrumLeader
+            )}
           </Grid>
         </Grid>
       </Grid>
-    );
+    )
   }
 
   renderThankYou = () => {
-    const {classes} = this.props;
+    const { classes } = this.props
     return (
       <React.Fragment>
         <h2 className={classes.thanksTitle}>{strings.thankYou}</h2>
@@ -516,29 +572,33 @@ class AttendeeForm extends Component {
           className={classes.thanksButton}
           variant="contained"
           color="primary"
-          onClick={this.handleAcceptClicked}>{strings.accept}</Button>
+          onClick={this.handleAcceptClicked}
+        >
+          {strings.accept}
+        </Button>
       </React.Fragment>
-    );
+    )
   }
 
   renderNextButton = () => {
-    const {enableSave} = this.state;
-    const {classes} = this.props;
+    const { enableSave } = this.state
+    const { classes } = this.props
     return (
       <Button
         className={classes.primaryButton}
         disabled={!enableSave}
         variant="contained"
         color="primary"
-        onClick={this.handleNextClicked}>
+        onClick={this.handleNextClicked}
+      >
         {strings.next}
       </Button>
-    );
+    )
   }
 
   renderBackSaveButton = () => {
-    const {enableSave} = this.state;
-    const {classes} = this.props;
+    const { enableSave } = this.state
+    const { classes } = this.props
     return (
       <React.Fragment>
         <Button
@@ -546,19 +606,25 @@ class AttendeeForm extends Component {
           disabled={!enableSave}
           variant="contained"
           color="primary"
-          onClick={this.handleSaveClicked}>{strings.save}</Button>
+          onClick={this.handleSaveClicked}
+        >
+          {strings.save}
+        </Button>
         <Button
           className={classes.secondaryButton}
           variant="outlined"
           color="primary"
-          onClick={this.handleBackClicked}>{strings.back}</Button>
+          onClick={this.handleBackClicked}
+        >
+          {strings.back}
+        </Button>
       </React.Fragment>
-    );
+    )
   }
 
   renderCancelSaveButton = () => {
-    const {enableSave} = this.state;
-    const {classes} = this.props;
+    const { enableSave } = this.state
+    const { classes } = this.props
     return (
       <React.Fragment>
         <Button
@@ -566,57 +632,68 @@ class AttendeeForm extends Component {
           disabled={!enableSave}
           variant="contained"
           color="primary"
-          onClick={this.handleSaveClicked}>{strings.save}</Button>
+          onClick={this.handleSaveClicked}
+        >
+          {strings.save}
+        </Button>
         <Button
           className={classes.secondaryButton}
           variant="outlined"
           color="primary"
-          onClick={this.handleCancelClicked}>{strings.cancel}</Button>
+          onClick={this.handleCancelClicked}
+        >
+          {strings.cancel}
+        </Button>
       </React.Fragment>
-    );
+    )
   }
 
   renderActiveStep = (step) => {
-    const {classes} = this.props;
-    const {event} = this.state;
+    const { classes } = this.props
+    const { event } = this.state
 
     if (step === 1) {
       return (
         <Grid container>
           <Grid container className={classes.stepContainer} direction="row">
-            <AttendeeFormHeaderStep eventType={event.eventType} activeStep={1}/>
+            <AttendeeFormHeaderStep
+              eventType={event.eventType}
+              activeStep={1}
+            />
           </Grid>
           <Grid container direction="row">
             {this.renderPersonalData()}
           </Grid>
           <Grid container className={classes.buttonsContainer} direction="row">
-            {this.isRecruitingEvent() ?
-              this.renderNextButton() : this.renderCancelSaveButton()
-            }
+            {this.isRecruitingEvent()
+              ? this.renderNextButton()
+              : this.renderCancelSaveButton()}
           </Grid>
         </Grid>
-      );
+      )
     }
 
     return (
       <Grid container>
         <Grid container className={classes.stepContainer} direction="row">
-          <AttendeeFormHeaderStep eventType={event.eventType} activeStep={2}/>
+          <AttendeeFormHeaderStep eventType={event.eventType} activeStep={2} />
         </Grid>
         <Grid container direction="row">
-          {this.renderTechnologies()}</Grid>
+          {this.renderTechnologies()}
+        </Grid>
         <Grid container direction="row">
-          {this.renderExperience()}</Grid>
+          {this.renderExperience()}
+        </Grid>
         <Grid container className={classes.buttonsContainer} direction="row">
           {this.renderBackSaveButton()}
         </Grid>
       </Grid>
-    );
+    )
   }
 
   render() {
-    const {activeStep, showThanks} = this.state;
-    const {classes} = this.props;
+    const { activeStep, showThanks } = this.state
+    const { classes } = this.props
 
     return (
       <NavigationLayout title={strings.title} showLogo={true}>
@@ -627,14 +704,13 @@ class AttendeeForm extends Component {
           open={showThanks}
           disableBackdropClick={true}
           disableEscapeKeyDown={true}
-          fullWidth={true}>
-          <DialogContent>
-            {this.renderThankYou()}
-          </DialogContent>
+          fullWidth={true}
+        >
+          <DialogContent>{this.renderThankYou()}</DialogContent>
         </Dialog>
       </NavigationLayout>
-    );
+    )
   }
 }
 
-export default withMessage(withRouter(withStyles(styles)(AttendeeForm)));
+export default withMessage(withRouter(withStyles(styles)(AttendeeForm)))

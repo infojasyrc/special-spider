@@ -5,7 +5,7 @@ import { withStyles, TextField, Grid } from '@material-ui/core'
 import EventTypes from './EventTypes/EventTypes'
 import FormButtons from './FormButtons/FormButtons'
 import SelectWithLoading from './DropDown/SelectWithLoading'
-import TextFieldWithValidation from './TextFieldWithValidation'
+import TextFieldWithValidation from './TextField/TextFieldWithValidation'
 import ImagesPreview from './ImagesPreview/ImagesPreview'
 
 import NavigationLayout from '../hocs/NavigationLayout'
@@ -477,7 +477,7 @@ class CreateUpdateEvent extends Component {
             label="Title"
             value={name}
             error={validation.name.error}
-            errorMessage={validation.name.message}
+            helperText={validation.name.message}
             onChange={this.handleTextChanged}
             onBlur={this.handleRequiredFieldBlurred}
           />
@@ -496,7 +496,7 @@ class CreateUpdateEvent extends Component {
             label="Date"
             value={date}
             error={validation.date.error}
-            errorMessage={validation.date.message}
+            helperText={validation.date.message}
             type="datetime-local"
             InputLabelProps={{
               shrink: true,

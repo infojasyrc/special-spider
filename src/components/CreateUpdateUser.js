@@ -22,7 +22,7 @@ import ImagesApi from '../api/images'
 import SelectWithLoading from './DropDown/SelectWithLoading'
 import { withUserContext } from '../hocs/UserContext'
 import { getBase64, validateEmail } from '../tools'
-import TextFieldWithValidation from './TextFieldWithValidation'
+import TextFieldWithValidation from './TextField/TextFieldWithValidation'
 
 class CreateUpdateUser extends Component {
   constructor(props) {
@@ -414,7 +414,7 @@ class CreateUpdateUser extends Component {
               value={name}
               required={true}
               error={validation.name.error}
-              errorMessage={validation.name.message}
+              helperText={validation.name.message}
               onChange={this.handleTextChanged}
               onBlur={this.handleRequiredFieldBlurred}
             />
@@ -428,7 +428,7 @@ class CreateUpdateUser extends Component {
               value={lastName}
               required={true}
               error={validation.lastName.error}
-              errorMessage={validation.lastName.message}
+              helperText={validation.lastName.message}
               onChange={this.handleTextChanged}
               onBlur={this.handleRequiredFieldBlurred}
             />
@@ -442,7 +442,7 @@ class CreateUpdateUser extends Component {
               value={email}
               required={true}
               error={validation.email.error}
-              errorMessage={validation.email.message}
+              helperText={validation.email.message}
               onChange={this.handleTextChanged}
               onBlur={this.handleRequiredFieldBlurred}
             />
