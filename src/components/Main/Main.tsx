@@ -1,7 +1,7 @@
 import { ReactNode, useContext } from 'react'
 import { Paper, createStyles, makeStyles } from '@material-ui/core'
 
-import LoginPage from '../../pages/Login/Login'
+// import LoginPage from '../../pages/Login/Login'
 
 import FullAppBar from '../FullAppBar/FullAppBar'
 import NavigationBar from '../Navigation/NavigationBar'
@@ -45,20 +45,21 @@ export interface MainProps {
 }
 
 export default function Main({ children }: MainProps): JSX.Element {
-  const { isLoggedIn, logout } = useContext(UserContext)
+  // const { isLoggedIn, logout } = useContext(UserContext)
+  const { logout } = useContext(UserContext)
   const { layout, title, showLogo } = useContext(LayoutContext)
 
   const classes = useStyles()
 
-  if (!isLoggedIn) {
-    return (
-      <Paper className={classes.mainContainer}>
-        <div className={classes.innerContainer}>
-          <LoginPage />
-        </div>
-      </Paper>
-    )
-  }
+  // if (!isLoggedIn) {
+  //   return (
+  //     <Paper className={classes.mainContainer}>
+  //       <div className={classes.innerContainer}>
+  //         <LoginPage />
+  //       </div>
+  //     </Paper>
+  //   )
+  // }
 
   const handleLogout = () => {
     const api = Authentication()

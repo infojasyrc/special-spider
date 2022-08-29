@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import Main from './components/Main/Main'
+// import Main from './components/Main/Main'
 
 import ThemeProvider from './providers/ThemeProvider'
-import Routes from './routes/Routes'
+// import Routes from './routes/Routes'
+import AppRoutes from './components/AppRoutes/AppRoutes'
 
 import { LayoutProvider, UserProvider } from './shared/contexts'
 
@@ -12,9 +13,9 @@ class App extends Component {
       <ThemeProvider>
         <UserProvider>
           <LayoutProvider>
-            <Main>
-              <Routes />
-            </Main>
+            {/* <Main> */}
+              <AppRoutes />
+            {/* </Main> */}
           </LayoutProvider>
         </UserProvider>
       </ThemeProvider>
