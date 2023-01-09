@@ -3,7 +3,7 @@ import {baseStyles} from './Base';
 export const styles = theme => ({
   textField: baseStyles(theme).textField,
   avatarButton: {
-    marginTop: theme.spacing.unit
+    marginTop: theme.spacing
   },
   avatar: {
     width: '80px',

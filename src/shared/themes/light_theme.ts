@@ -1,13 +1,13 @@
 import { createTheme } from '@material-ui/core/styles'
-import { colors } from './theme/colors'
+import { colors } from './colors'
 
 export const theme = createTheme({
-  barTitle: {
-    marginLeft: '0',
-    fontFamily: 'Exo',
-    color: colors.white,
-  },
-  colors: colors,
+  // barTitle: {
+  //   marginLeft: '0',
+  //   fontFamily: 'Exo',
+  //   color: colors.white,
+  // },
+  // colors: colors,
   palette: {
     primary: {
       main: colors.black,
@@ -34,12 +34,12 @@ export const theme = createTheme({
     ].join(','),
     // useNextVariants: true,
   },
-  mainContainer: {
-    position: 'fixed',
-    backgroundColor: colors.lightGray,
-    height: '99.9%',
-    width: '100%',
-    overflow: 'auto',
-    borderRadius: 0,
-  },
+  // mainContainer: {
+  //   position: 'fixed',
+  //   backgroundColor: colors.lightGray,
+  //   height: '99.9%',
+  //   width: '100%',
+  //   overflow: 'auto',
+  //   borderRadius: 0,
+  // },
 })
