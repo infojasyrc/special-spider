@@ -14,18 +14,18 @@ export const baseStyles = (theme) => {
     },
     primaryButton: {
       position: 'fixed',
-      bottom: theme.spacing.unit * 2,
-      right: theme.spacing.unit * 2.75
+      bottom: theme.spacing(2),
+      right: theme.spacing(2.75)
     },
     secondaryButton: {
       position: 'absolute',
-      bottom: theme.spacing.unit * 2,
-      right: theme.spacing.unit * 11.75
+      bottom: theme.spacing(2),
+      right: theme.spacing(11.75)
     },
     textField: {
       display: 'flex',
-      marginTop: theme.spacing.unit,
-      marginRight: theme.spacing.unit * 2
+      marginTop: theme.spacing,
+      marginRight: theme.spacing(2)
     },
     wideInput: {}
   };

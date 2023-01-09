@@ -43,7 +43,6 @@ export default function LoginPage(): JSX.Element {
 
     api.login({ email: userName, password })
       .then((result) => {
-        console.log('result login: ', result)
         let token = ''
         result.user.getIdToken().then((resultToken) => {
           token = resultToken

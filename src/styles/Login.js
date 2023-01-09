@@ -62,7 +62,7 @@ export const styles = theme => ({
     }
   },
   button: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing,
   },
   loginLogo: {
     backgroundRepeat: 'no-repeat',

@@ -4,7 +4,7 @@ export const styles = theme => ({
   add: baseStyles(theme).primaryButton,
   edit: {
     color: theme.colors.orange,
-    marginRight: theme.spacing.unit
+    marginRight: theme.spacing
   },
   disable: {
     color: theme.colors.red
