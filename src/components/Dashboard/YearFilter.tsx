@@ -3,8 +3,12 @@ import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core'
 
 import { getCurrentYear } from '../../tools'
 
-export default function YearFilter(): JSX.Element {
-  const [selectedYear, setSelectedYear] = useState<string | unknown>('')
+export type YearFilterProps = {
+  onChange: (selectedYear: string) => void
+}
+
+export default function YearFilter({ onChange }: YearFilterProps): JSX.Element {
+  const [selectedYear, setSelectedYear] = useState('')
 
   const currentYear = parseInt(getCurrentYear())
   const nextYear = currentYear + 1
@@ -13,7 +17,8 @@ export default function YearFilter(): JSX.Element {
   const allYears = [nextYear, currentYear, pastYear]
 
   const handleYearChanged = (e: ChangeEvent<{ value: unknown }>) => {
-    setSelectedYear(e.target.value)
+    setSelectedYear(e.target.value as string)
+    onChange(e.target.value as string)
   }
 
   return (

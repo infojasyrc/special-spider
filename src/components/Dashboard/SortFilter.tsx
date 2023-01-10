@@ -16,12 +16,17 @@ const useStyles = makeStyles(() =>
   })
 )
 
-export default function SortFilter(): JSX.Element {
-  const [sortBy, setSortBy] = useState<string | unknown>('')
+export type SortFilterProps = {
+  onChange: (selectedSort: string) => void
+}
+
+export default function SortFilter({ onChange }: SortFilterProps): JSX.Element {
+  const [sortBy, setSortBy] = useState('')
   const classes = useStyles()
 
   const handleSortByChanged = (e: ChangeEvent<{ value: unknown }>) => {
-    setSortBy(e.target.value)
+    setSortBy(e.target.value as string)
+    onChange(e.target.value as string)
   }
 
   return (
