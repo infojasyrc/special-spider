@@ -73,7 +73,7 @@ export default function EventsView({
           selectedHeadquarter={selectedHeadquarter}
           loading={loadingHeadquarters}
         />
-        <DashboardFilters changeFilters={changeFilters} />
+        <DashboardFilters onChangeFilters={changeFilters} />
       </Grid>
       <Grid container>
         {loadingEvents && <>Loading events</>}
