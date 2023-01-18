@@ -28,8 +28,13 @@ const useStyles = makeStyles(() =>
   })
 )
 
+export type OptionDropdown = {
+  value: string
+  title: string
+}
+
 export type CustomDropdownProps = {
-  elements: string[]
+  elements: OptionDropdown[]
   title: string
   onChange: (selectedYear: string) => void
   htmlId?: string
@@ -66,9 +71,13 @@ export default function CustomDropdown({
         onChange={handleOnChanged}
         data-testid="dropdownCustomDropdown"
       >
-        {elements.map((year, index) => (
-          <MenuItem key={index} value={year} className={classes.optionDropdown}>
-            {year}
+        {elements.map((element, index) => (
+          <MenuItem
+            key={index}
+            value={element.value}
+            className={classes.optionDropdown}
+          >
+            {element.title}
           </MenuItem>
         ))}
       </Select>

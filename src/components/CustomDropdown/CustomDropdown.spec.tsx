@@ -14,16 +14,20 @@ const renderComponent = (props: CustomDropdownProps) =>
 describe('year filter component', () => {
   it('should render all filter', () => {
     const props: CustomDropdownProps = {
-      elements: ['2022', '2023', '2024'],
+      elements: [
+        { title: '2022', value: '2022' },
+        { value: '2023', title: '2023' },
+        { value: '2024', title: '2024' },
+      ],
       title: 'Year',
       onChange: jest.fn(),
     }
     renderComponent(props)
 
-    const element = screen.getByRole('button')
-    expect(element).toBeInTheDocument()
+    const elementHTML = screen.getByRole('button')
+    expect(elementHTML).toBeInTheDocument()
 
-    fireEvent.mouseDown(element)
+    fireEvent.mouseDown(elementHTML)
     const listbox = within(screen.getByRole('listbox'))
 
     expect(screen.getAllByRole('option').length).toBe(3)
@@ -35,7 +39,11 @@ describe('year filter component', () => {
   it('should render selected filter', () => {
     const mockOnChange = jest.fn()
     const props: CustomDropdownProps = {
-      elements: ['2022', '2023', '2024'],
+      elements: [
+        { title: '2022', value: '2022' },
+        { value: '2023', title: '2023' },
+        { value: '2024', title: '2024' },
+      ],
       title: 'Year',
       onChange: mockOnChange,
     }
