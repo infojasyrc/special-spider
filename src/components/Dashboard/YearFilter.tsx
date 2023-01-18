@@ -1,5 +1,4 @@
-import { ChangeEvent, useState } from 'react'
-import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core'
+import CustomDropdown from '../CustomDropdown/CustomDropdown'
 
 import { getCurrentYear } from '../../tools'
 
@@ -8,37 +7,27 @@ export type YearFilterProps = {
 }
 
 export default function YearFilter({ onChange }: YearFilterProps): JSX.Element {
-  const [selectedYear, setSelectedYear] = useState('')
-
   const currentYear = parseInt(getCurrentYear())
   const nextYear = currentYear + 1
   const pastYear = currentYear - 1
 
-  const allYears = [nextYear, currentYear, pastYear]
+  const allYears = [
+    { value: nextYear.toString(), title: nextYear.toString() },
+    { value: currentYear.toString(), title: currentYear.toString() },
+    { value: pastYear.toString(), title: pastYear.toString() },
+  ]
 
-  const handleYearChanged = (e: ChangeEvent<{ value: unknown }>) => {
-    setSelectedYear(e.target.value as string)
-    onChange(e.target.value as string)
+  const handleYearChanged = (selectedOption: string) => {
+    onChange(selectedOption)
   }
 
   return (
-    <FormControl>
-      <InputLabel htmlFor="select-year">Show</InputLabel>
-      <Select
-        inputProps={{
-          name: 'select-year',
-          id: 'select-year',
-        }}
-        value={selectedYear}
-        onChange={handleYearChanged}
-        data-testid="dropdownYearFilter"
-      >
-        {allYears.map((year, index) => (
-          <MenuItem key={index} value={year}>
-            {year}
-          </MenuItem>
-        ))}
-      </Select>
-    </FormControl>
+    <CustomDropdown
+      htmlId="select-year"
+      htmlName="select-name"
+      elements={allYears}
+      onChange={handleYearChanged}
+      title="Year"
+    />
   )
 }

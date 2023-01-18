@@ -1,49 +1,26 @@
-import { ChangeEvent, useState } from 'react'
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  makeStyles,
-  createStyles,
-} from '@material-ui/core'
-
-const useStyles = makeStyles(() =>
-  createStyles({
-    sortBy: {
-      marginLeft: '1em',
-    },
-  })
-)
+import CustomDropdown from '../CustomDropdown/CustomDropdown'
 
 export type SortFilterProps = {
   onChange: (selectedSort: string) => void
 }
 
 export default function SortFilter({ onChange }: SortFilterProps): JSX.Element {
-  const [sortBy, setSortBy] = useState('')
-  const classes = useStyles()
+  const options = [
+    { value: 'oldest', title: 'Ascending' },
+    { value: 'newest', title: 'Descending' },
+  ]
 
-  const handleSortByChanged = (e: ChangeEvent<{ value: unknown }>) => {
-    setSortBy(e.target.value as string)
-    onChange(e.target.value as string)
+  const handleSortByChanged = (sortBySelected: string) => {
+    onChange(sortBySelected)
   }
 
   return (
-    <FormControl className={classes.sortBy}>
-      <InputLabel htmlFor="sorter">Sort dates</InputLabel>
-      <Select
-        inputProps={{
-          name: 'sorter',
-          id: 'sorter',
-        }}
-        value={sortBy}
-        onChange={handleSortByChanged}
-        data-testid="dropdownSortByFilter"
-      >
-        <MenuItem value={'oldest'}>Ascending</MenuItem>
-        <MenuItem value={'newest'}>Descending</MenuItem>
-      </Select>
-    </FormControl>
+    <CustomDropdown
+      elements={options}
+      title="Sort Dates"
+      onChange={handleSortByChanged}
+      htmlId="sorter"
+      htmlName="sorter"
+    />
   )
 }
