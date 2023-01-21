@@ -20,15 +20,15 @@ import { HeadquarterAPI, ConferenceAPI } from '../../shared/api'
 import {
   Conference,
   Headquarter,
-  ConferenceFilters,
+  // ConferenceFilters,
 } from '../../shared/entities'
 
 export default function EventsPage(): JSX.Element {
   const [allHeadquarters, setAllHeadquarters] = useState<Headquarter[]>([])
   const [events, setEvents] = useState<Conference[]>([])
   const [loadingHeadquarters, setLoadingHeadquarters] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [sortBy, setSortBy] = useState<string | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [sortBy] = useState<string | null>(null)
   // const [selectedYear, setSelectedYear] = useState<string | null>(null)
   const [selectedHeadquarter, setSelectedHeadquarter] = useState('-1')
 
@@ -73,7 +73,8 @@ export default function EventsPage(): JSX.Element {
 
     // showLoading()
 
-    apiConferences.getAll()
+    apiConferences
+      .getAll()
       .then((events) => {
         // let newSelectedEvent = null
 
@@ -84,12 +85,15 @@ export default function EventsPage(): JSX.Element {
 
         //   newSelectedEvent = index > 0 ? events[index] : null
         // }
-        setLoading(false)
+        // setLoading(false)
         setEvents(sortByDate(events))
       })
       .catch((error) => {
         setLoading(false)
         console.error(error)
+      })
+      .finally(() => {
+        setLoading(false)
       })
   }
 
@@ -106,28 +110,36 @@ export default function EventsPage(): JSX.Element {
     fetchEvents()
   }
 
-  const handleFiltersChanged = (filters: ConferenceFilters) => {
-    setSortBy(filters.sortBy)
-    // setSelectedYear(filters.year)
-    fetchEvents()
-  }
+  // const handleFiltersChanged = (filters: ConferenceFilters) => {
+  //   setSortBy(filters.sortBy)
+  //   // setSelectedYear(filters.year)
+  //   fetchEvents()
+  // }
 
   const handleEnterClicked = (event: Conference) => {
     history.push(`/play-event/${event.id}`)
   }
 
+  if (loading) {
+    return <>Loading events</>
+  }
+
   return (
-    <EventsView
-      events={events}
-      allHeadquarters={allHeadquarters}
-      selectedHeadquarter={selectedHeadquarter}
-      loadingEvents={loading}
-      loadingHeadquarters={loadingHeadquarters}
-      isAdmin={user?.isAdmin || false}
-      changeHeadquarter={handleHeadquarterChanged}
-      changeFilters={handleFiltersChanged}
-      onSelectedEvent={handleEnterClicked}
-    ></EventsView>
+    <>
+      {!loading && (
+        <EventsView
+          events={events}
+          allHeadquarters={allHeadquarters}
+          selectedHeadquarter={selectedHeadquarter}
+          loadingEvents={loading}
+          loadingHeadquarters={loadingHeadquarters}
+          isAdmin={user?.isAdmin || false}
+          changeHeadquarter={handleHeadquarterChanged}
+          // changeFilters={handleFiltersChanged}
+          onSelectedEvent={handleEnterClicked}
+        />
+      )}
+    </>
   )
 }
 
