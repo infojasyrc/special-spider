@@ -66,10 +66,11 @@ export default function CustomDropdown({
         inputProps={{
           name: htmlName,
           id: htmlId,
+          "aria-label": htmlName,
         }}
         value={selectedOption}
         onChange={handleOnChanged}
-        data-testid="dropdownCustomDropdown"
+        data-testid={'custom-dropdown-' + htmlId}
       >
         {elements.map((element, index) => (
           <MenuItem

@@ -85,7 +85,7 @@ EventsViewProps): JSX.Element {
           <h1 className={classes.title}>Events</h1>
           <Grid
             container
-            justify="center"
+            justifyContent='center'
             className={classes.headquarterFilter}
           >
             <Headquarters

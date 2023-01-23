@@ -24,7 +24,7 @@ export default function YearFilter({ onChange }: YearFilterProps): JSX.Element {
   return (
     <CustomDropdown
       htmlId="select-year"
-      htmlName="select-name"
+      htmlName="select-year"
       elements={allYears}
       onChange={handleYearChanged}
       title="Year"

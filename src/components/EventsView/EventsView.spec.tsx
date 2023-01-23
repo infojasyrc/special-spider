@@ -1,4 +1,6 @@
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
+// TODO: Repleace fireEvent by userEvent
+// import userEvent from '@testing-library/user-event'
 import { Conference, Headquarter } from '../../shared/entities'
 
 import EventsView, { EventsViewProps } from './EventsView'
@@ -100,12 +102,34 @@ describe('events view component', () => {
       const eventElement02 = screen.getByText(/event 02/i)
       const eventElement03 = screen.getByText(/event 03/i)
 
+      const filterByYearElement = screen.getByRole('button', {
+        name: 'select-year',
+        exact: true,
+      })
+
       expect(eventsTitle).toBeInTheDocument()
       expect(headquarterTitle).toBeInTheDocument()
 
       expect(eventElement01).toBeInTheDocument()
       expect(eventElement02).toBeInTheDocument()
       expect(eventElement03).toBeInTheDocument()
+
+      expect(filterByYearElement).toBeInTheDocument()
+
+      // TODO: Repleace fireEvent by userEvent
+      fireEvent.mouseDown(filterByYearElement)
+      // userEvent.click(filterByYearElement)
+      
+      // userEvent.selectOptions(
+      //   filterByYearElement,
+      //   screen.getByRole('option', { name: '2023' })
+      // )
+
+      // screen.logTestingPlaygroundURL()
+      // const listbox = within(
+      //   screen.getByRole('listbox', { name: 'select-year', exact: true })
+      // )
+      // expect(listbox.getByText(/2023/i)).toBeInTheDocument()
     })
   })
 })
