@@ -1,10 +1,6 @@
 /* eslint-disable no-mixed-operators */
 import Moment from 'moment';
 
-function formatDateForComparison(dateValue) {
-  return Moment(dateValue, 'yyyy-MM-DD hh:mm:ss.SSS');
-}
-
 export const uuidv4 = () => {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
     let r = Math.random() * 16 | 0;
@@ -39,16 +35,4 @@ export const isValidImageType = (imageType) => {
 
 export const getCurrentYear = () => {
   return Moment().format('YYYY');
-}
-
-export const sortDescending = (first, second) => {
-  const firstMoment = formatDateForComparison(first.date);
-  const secondMoment = formatDateForComparison(second.date);
-  return firstMoment.isBefore(secondMoment) ? 1 : -1;
-}
-
-export const sortAscending = (first, second) => {
-  const firstMoment = formatDateForComparison(first.date);
-  const secondMoment = formatDateForComparison(second.date);
-  return firstMoment.isBefore(secondMoment) ? -1 : 1;
 }

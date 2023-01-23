@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { makeStyles, createStyles, Grid, Fab } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
 
@@ -7,7 +8,13 @@ import Headquarters from '../Headquarters/Headquarters'
 import DashboardFilters from '../Dashboard/DashboardFilters'
 import NavigationWrapper from '../Navigation/NavigationWrapper'
 
-import { Conference, Headquarter, ConferenceFilters } from '../../shared/entities'
+import {
+  Conference,
+  Headquarter,
+  ConferenceFilters,
+} from '../../shared/entities'
+
+import { sortAscending, sortDescending } from '../../tools/sorting'
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -42,7 +49,6 @@ export interface EventsViewProps {
   // onClose: () => void
   onSelectedEvent: (event: Conference) => void
   changeHeadquarter: (headquarter: string) => void
-  changeFilters: ({year, sortBy}: ConferenceFilters) => void
 }
 
 export default function EventsView({
@@ -57,43 +63,65 @@ export default function EventsView({
   // onClose,
   onSelectedEvent,
   changeHeadquarter,
-  changeFilters,
 }: EventsViewProps): JSX.Element {
+  const [allEvents] = useState<Conference[]>(events)
+  const [filteredEvents, setFilteredEvents] = useState<Conference[]>(events)
   const classes = useStyles()
 
   const handleSelected = (event: Conference) => onSelectedEvent(event)
 
+  const handleChangeFilters = (filters: ConferenceFilters) => {
+    if (filters.sortBy) {
+      const sortedAllEvents =
+        filters.sortBy === 'newest'
+          ? JSON.parse(JSON.stringify(allEvents)).sort(sortDescending)
+          : JSON.parse(JSON.stringify(allEvents)).sort(sortAscending)
+      setFilteredEvents(sortedAllEvents)
+    }
+  }
+
+  if (loadingEvents) {
+    return <>Loading...</>
+  }
+
   return (
-    <FullLayout title="Special Spider App">
-      <h1 className={classes.title}>Events</h1>
-      <Grid container justify="center" className={classes.headquarterFilter}>
-        <Headquarters
-          onChangeHeadquarter={changeHeadquarter}
-          allHeadquarters={allHeadquarters}
-          selectedHeadquarter={selectedHeadquarter}
-          loading={loadingHeadquarters}
-        />
-        <DashboardFilters onChangeFilters={changeFilters} />
-      </Grid>
-      <Grid container>
-        {loadingEvents && <>Loading events</>}
-        <EventList
-          events={events}
-          // onOpen={onOpen}
-          // onPause={onPause}
-          // onClose={onClose}
-          onSelected={handleSelected}
-        />
-      </Grid>
-      {/* <h1 className={classes.title}>Accounts</h1> */}
-      { isAdmin && 
-        <NavigationWrapper path="/event/add">
-          <Fab className={classes.add} color="primary">
-            <AddIcon />
-          </Fab>
-        </NavigationWrapper>
-      }
-      {/*this.renderPreviewEvent()*/}
-    </FullLayout>
+    <>
+      {!loadingEvents && (
+        <FullLayout title="Special Spider App">
+          <h1 className={classes.title}>Events</h1>
+          <Grid
+            container
+            justifyContent="center"
+            className={classes.headquarterFilter}
+          >
+            <Headquarters
+              onChangeHeadquarter={changeHeadquarter}
+              allHeadquarters={allHeadquarters}
+              selectedHeadquarter={selectedHeadquarter}
+              loading={loadingHeadquarters}
+            />
+            <DashboardFilters onChangeFilters={handleChangeFilters} />
+          </Grid>
+          <Grid container>
+            <EventList
+              events={filteredEvents}
+              // onOpen={onOpen}
+              // onPause={onPause}
+              // onClose={onClose}
+              onSelected={handleSelected}
+            />
+          </Grid>
+          {/* <h1 className={classes.title}>Accounts</h1> */}
+          {isAdmin && (
+            <NavigationWrapper path="/event/add">
+              <Fab className={classes.add} color="primary">
+                <AddIcon />
+              </Fab>
+            </NavigationWrapper>
+          )}
+          {/*this.renderPreviewEvent()*/}
+        </FullLayout>
+      )}
+    </>
   )
 }
