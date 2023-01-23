@@ -10,8 +10,6 @@ import EventsView from '../../components/EventsView/EventsView'
 
 // import PreviewEvent from '../../components/PreviewEvent/PreviewEvent'
 
-import { sortDescending, sortAscending } from '../../tools'
-
 // import database from '../../database/database'
 // import DataService from '../../database/dataService'
 
@@ -20,16 +18,16 @@ import { HeadquarterAPI, ConferenceAPI } from '../../shared/api'
 import {
   Conference,
   Headquarter,
-  // ConferenceFilters,
 } from '../../shared/entities'
+
+import { sortAscending } from '../../tools/sorting'
 
 export default function EventsPage(): JSX.Element {
   const [allHeadquarters, setAllHeadquarters] = useState<Headquarter[]>([])
   const [events, setEvents] = useState<Conference[]>([])
   const [loadingHeadquarters, setLoadingHeadquarters] = useState(false)
   const [loading, setLoading] = useState(true)
-  const [sortBy] = useState<string | null>(null)
-  // const [selectedYear, setSelectedYear] = useState<string | null>(null)
+
   const [selectedHeadquarter, setSelectedHeadquarter] = useState('-1')
 
   const apiHeadquarters = HeadquarterAPI()
@@ -54,24 +52,10 @@ export default function EventsPage(): JSX.Element {
       })
   }
 
-  const sortByDate = (events: Conference[]) => {
-    if (sortBy === 'newest') {
-      return events.sort(sortDescending)
-    }
-
-    return events.sort(sortAscending)
-  }
+  const sortByDate = (events: Conference[]) => events.sort(sortAscending)
 
   const fetchEvents = () => {
     setLoading(true)
-    // const { selectedYear, selectedHeadquarter, selectedEvent } = this.state
-    // const { showLoading, hideMessage, userContext } = this.props
-
-    // if (!selectedYear || !selectedHeadquarter) {
-    //   return
-    // }
-
-    // showLoading()
 
     apiConferences
       .getAll()
@@ -85,7 +69,6 @@ export default function EventsPage(): JSX.Element {
 
         //   newSelectedEvent = index > 0 ? events[index] : null
         // }
-        // setLoading(false)
         setEvents(sortByDate(events))
       })
       .catch((error) => {
@@ -110,12 +93,6 @@ export default function EventsPage(): JSX.Element {
     fetchEvents()
   }
 
-  // const handleFiltersChanged = (filters: ConferenceFilters) => {
-  //   setSortBy(filters.sortBy)
-  //   // setSelectedYear(filters.year)
-  //   fetchEvents()
-  // }
-
   const handleEnterClicked = (event: Conference) => {
     history.push(`/play-event/${event.id}`)
   }
@@ -135,7 +112,6 @@ export default function EventsPage(): JSX.Element {
           loadingHeadquarters={loadingHeadquarters}
           isAdmin={user?.isAdmin || false}
           changeHeadquarter={handleHeadquarterChanged}
-          // changeFilters={handleFiltersChanged}
           onSelectedEvent={handleEnterClicked}
         />
       )}
@@ -232,20 +208,6 @@ export default function EventsPage(): JSX.Element {
 //         hideMessage()
 //         console.error(error)
 //       })
-//   }
-
-//   sortByDate = (events) => {
-//     const { sortBy } = this.state
-
-//     if (!events) {
-//       return
-//     }
-
-//     if (sortBy === 'newest') {
-//       return events.sort(sortDescending)
-//     }
-
-//     return events.sort(sortAscending)
 //   }
 
 //   handleHeadquarterChanged = (selectedHeadquarter) => {

@@ -14,6 +14,8 @@ import {
   ConferenceFilters,
 } from '../../shared/entities'
 
+import { sortAscending, sortDescending } from '../../tools/sorting'
+
 const useStyles = makeStyles(() =>
   createStyles({
     title: {
@@ -47,7 +49,6 @@ export interface EventsViewProps {
   // onClose: () => void
   onSelectedEvent: (event: Conference) => void
   changeHeadquarter: (headquarter: string) => void
-  // changeFilters: ({ year, sortBy }: ConferenceFilters) => void
 }
 
 export default function EventsView({
@@ -62,16 +63,21 @@ export default function EventsView({
   // onClose,
   onSelectedEvent,
   changeHeadquarter,
-}: // changeFilters,
-EventsViewProps): JSX.Element {
-  const [filteredEvents] = useState<Conference[]>(events)
+}: EventsViewProps): JSX.Element {
+  const [allEvents] = useState<Conference[]>(events)
+  const [filteredEvents, setFilteredEvents] = useState<Conference[]>(events)
   const classes = useStyles()
 
   const handleSelected = (event: Conference) => onSelectedEvent(event)
 
   const handleChangeFilters = (filters: ConferenceFilters) => {
-    // changeFilters(filters)
-    console.log('filters', filters)
+    if (filters.sortBy) {
+      const sortedAllEvents =
+        filters.sortBy === 'newest'
+          ? JSON.parse(JSON.stringify(allEvents)).sort(sortDescending)
+          : JSON.parse(JSON.stringify(allEvents)).sort(sortAscending)
+      setFilteredEvents(sortedAllEvents)
+    }
   }
 
   if (loadingEvents) {
@@ -85,7 +91,7 @@ EventsViewProps): JSX.Element {
           <h1 className={classes.title}>Events</h1>
           <Grid
             container
-            justifyContent='center'
+            justifyContent="center"
             className={classes.headquarterFilter}
           >
             <Headquarters
