@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Grid, MenuItem, Select } from '@material-ui/core'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 
@@ -19,8 +19,8 @@ const useStyles = makeStyles(() =>
 export interface HeadquartersProps {
   loading: boolean
   allHeadquarters: Headquarter[]
-  selectedHeadquarter?: string,
-  onChangeHeadquarter: (headquarter: string) => void,
+  selectedHeadquarter?: string
+  onChangeHeadquarter: (headquarter: string) => void
 }
 
 export default function Headquarters({
@@ -29,13 +29,15 @@ export default function Headquarters({
   onChangeHeadquarter,
   selectedHeadquarter = '-1',
 }: HeadquartersProps): JSX.Element {
+  const [currentSelectedHeadquarter, setCurrentSelectedHeadquarter] =
+    useState(selectedHeadquarter)
   const classes = useStyles()
 
   const handleHeadquarterChanged = (
     e: React.ChangeEvent<{ value: unknown }>
   ) => {
-    selectedHeadquarter = e.currentTarget.value as string
-    onChangeHeadquarter(e.currentTarget.value as string)
+    setCurrentSelectedHeadquarter(e.target.value as string)
+    onChangeHeadquarter(e.target.value as string)
   }
 
   if (loading) {
@@ -43,7 +45,7 @@ export default function Headquarters({
   }
 
   const defaultItem = (
-    <MenuItem data-testid="option-headquarter" value="-1">
+    <MenuItem data-testid="option-headquarter-default" value="-1">
       Choose a Headquarter
     </MenuItem>
   )
@@ -51,7 +53,7 @@ export default function Headquarters({
   const items = allHeadquarters.map((headquarter, index) => {
     return (
       <MenuItem
-        data-testid="option-headquarter"
+        data-testid={'option-headquarter-' + index}
         key={index}
         value={headquarter.id}
       >
@@ -62,12 +64,22 @@ export default function Headquarters({
 
   return (
     <Grid item xs={10} sm={8}>
-      <label className={classes.headquarterFilterLabel}>Headquarter</label>
+      {/* <InputLabel
+        htmlFor="list-headquarters"
+        className={classes.headquarterFilterLabel}
+      >
+        Choose a headquarter
+      </InputLabel> */}
       <Select
         data-testid="list-headquarters"
-        id="list-headquarters"
+        inputProps={{
+          name: 'list-headquarters',
+          id: 'list-headquarters',
+          'aria-label': 'list-headquarters',
+        }}
+        label="Choose a headquarter"
         className={classes.headquarterSelect}
-        value={selectedHeadquarter}
+        value={currentSelectedHeadquarter}
         onChange={handleHeadquarterChanged}
       >
         {defaultItem}

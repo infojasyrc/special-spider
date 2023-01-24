@@ -1,4 +1,5 @@
 import { ImageMediaType } from './media'
+import { Headquarter } from './headquarter'
 
 export type ConferenceStatus = 'created' | 'opened' | 'paused' | 'closed'
 
@@ -10,6 +11,7 @@ export interface Conference {
   address?: string
   year?: number
   images?: ImageMediaType[]
+  headquarter?: Headquarter
 }
 
 export interface ConferenceFilters {

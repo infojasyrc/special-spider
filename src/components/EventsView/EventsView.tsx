@@ -48,7 +48,6 @@ export interface EventsViewProps {
   // onPause: () => void
   // onClose: () => void
   onSelectedEvent: (event: Conference) => void
-  changeHeadquarter: (headquarter: string) => void
 }
 
 export default function EventsView({
@@ -57,12 +56,11 @@ export default function EventsView({
   loadingEvents,
   loadingHeadquarters,
   isAdmin,
-  selectedHeadquarter,
+  selectedHeadquarter = '-1',
   // onOpen,
   // onPause,
   // onClose,
   onSelectedEvent,
-  changeHeadquarter,
 }: EventsViewProps): JSX.Element {
   const [allEvents] = useState<Conference[]>(events)
   const [filteredEvents, setFilteredEvents] = useState<Conference[]>(events)
@@ -80,6 +78,10 @@ export default function EventsView({
     }
   }
 
+  const handleHeadquarterChanged = (headquarter: string) => {
+    console.log('selected headquarter: ', headquarter)
+  }
+
   if (loadingEvents) {
     return <>Loading...</>
   }
@@ -94,12 +96,15 @@ export default function EventsView({
             justifyContent="center"
             className={classes.headquarterFilter}
           >
-            <Headquarters
-              onChangeHeadquarter={changeHeadquarter}
-              allHeadquarters={allHeadquarters}
-              selectedHeadquarter={selectedHeadquarter}
-              loading={loadingHeadquarters}
-            />
+            {loadingEvents && <>Loading Headquarters...</>}
+            {!loadingEvents && (
+              <Headquarters
+                onChangeHeadquarter={handleHeadquarterChanged}
+                allHeadquarters={allHeadquarters}
+                selectedHeadquarter={selectedHeadquarter}
+                loading={loadingHeadquarters}
+              />
+            )}
             <DashboardFilters onChangeFilters={handleChangeFilters} />
           </Grid>
           <Grid container>
