@@ -78,8 +78,19 @@ export default function EventsView({
     }
   }
 
-  const handleHeadquarterChanged = (headquarter: string) => {
-    console.log('selected headquarter: ', headquarter)
+  const handleHeadquarterChanged = (selectedHeadquarter: string) => {
+    let filteredByHeadquarter: Conference[] = JSON.parse(
+      JSON.stringify(allEvents)
+    )
+
+    if (selectedHeadquarter !== '-1') {
+      filteredByHeadquarter = filteredByHeadquarter.filter(
+        (element: Conference) =>
+          element.headquarter && element.headquarter.id === selectedHeadquarter
+      )
+    }
+
+    setFilteredEvents(filteredByHeadquarter)
   }
 
   if (loadingEvents) {

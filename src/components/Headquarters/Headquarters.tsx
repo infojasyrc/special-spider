@@ -64,12 +64,6 @@ export default function Headquarters({
 
   return (
     <Grid item xs={10} sm={8}>
-      {/* <InputLabel
-        htmlFor="list-headquarters"
-        className={classes.headquarterFilterLabel}
-      >
-        Choose a headquarter
-      </InputLabel> */}
       <Select
         data-testid="list-headquarters"
         inputProps={{

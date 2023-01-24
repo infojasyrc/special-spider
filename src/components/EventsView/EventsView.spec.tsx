@@ -180,6 +180,9 @@ describe('events view component', () => {
       userEvent.click(within(listbox).getByText(/piura/i))
 
       expect(await screen.findByText(/piura/i)).toBeInTheDocument()
+
+      expect(screen.queryByText(/event 02/i)).not.toBeInTheDocument()
+      expect(screen.queryByText(/event 03/i)).not.toBeInTheDocument()
     })
   })
 })
