@@ -28,7 +28,7 @@ export default function EventsPage(): JSX.Element {
   const [loadingHeadquarters, setLoadingHeadquarters] = useState(false)
   const [loading, setLoading] = useState(true)
 
-  const [selectedHeadquarter, setSelectedHeadquarter] = useState('-1')
+  // const [selectedHeadquarter, setSelectedHeadquarter] = useState('-1')
 
   const apiHeadquarters = HeadquarterAPI()
   const apiConferences = ConferenceAPI()
@@ -87,11 +87,11 @@ export default function EventsPage(): JSX.Element {
   }, [])
 
   /* eslint-enable */
-  const handleHeadquarterChanged = (selectedHeadquarter: string) => {
-    // this.props.userContext.selectHeadquarter(selectedHeadquarter)
-    setSelectedHeadquarter(selectedHeadquarter)
-    fetchEvents()
-  }
+  // const handleHeadquarterChanged = (selectedHeadquarter: string) => {
+  //   // this.props.userContext.selectHeadquarter(selectedHeadquarter)
+  //   setSelectedHeadquarter(selectedHeadquarter)
+  //   fetchEvents()
+  // }
 
   const handleEnterClicked = (event: Conference) => {
     history.push(`/play-event/${event.id}`)
@@ -107,11 +107,9 @@ export default function EventsPage(): JSX.Element {
         <EventsView
           events={events}
           allHeadquarters={allHeadquarters}
-          selectedHeadquarter={selectedHeadquarter}
           loadingEvents={loading}
           loadingHeadquarters={loadingHeadquarters}
           isAdmin={user?.isAdmin || false}
-          changeHeadquarter={handleHeadquarterChanged}
           onSelectedEvent={handleEnterClicked}
         />
       )}
