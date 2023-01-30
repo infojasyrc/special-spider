@@ -1,5 +1,5 @@
-import { UserInApp } from '../../entities'
-import { filterByInCollections } from './base'
+import { User, UserInApp } from '../../entities'
+import { filterByInCollections, getAppCollections } from './base'
 
 function UsersAPI() {
   const collectionName = 'users'
@@ -28,8 +28,15 @@ function UsersAPI() {
     return expectedUser
   }
 
+  const getAll = async (): Promise<User[]> => {
+    const doList = await getAppCollections(collectionName)
+    const users: User[] = doList.map((user) => user as User)
+    return users
+  }
+
   return {
     filterByUID,
+    getAll,
   }
 }
 

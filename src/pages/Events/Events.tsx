@@ -208,22 +208,6 @@ export default function EventsPage(): JSX.Element {
 //       })
 //   }
 
-//   handleHeadquarterChanged = (selectedHeadquarter) => {
-//     this.props.userContext.selectHeadquarter(selectedHeadquarter)
-//     this.setState({ selectedHeadquarter: selectedHeadquarter }, () => {
-//       this.fetchEvents()
-//     })
-//   }
-
-//   handleFiltersChanged = (filters) => {
-//     this.setState(
-//       { sortBy: filters.sortBy, selectedYear: filters.year },
-//       () => {
-//         this.fetchEvents()
-//       }
-//     )
-//   }
-
 //   handleSelectedEvent = (event) => {
 //     this.setState({ selectedEvent: event })
 //   }
@@ -369,22 +353,6 @@ export default function EventsPage(): JSX.Element {
 //       })
 //   }
 
-//   renderFilters = () => {
-//     const { allHeadquarters, loadingHeadquarters } = this.state
-//     const { classes } = this.props
-
-//     return (
-//       <Grid container justify="center" className={classes.headquarterFilter}>
-//         <Headquarters
-//           changeHeadquarter={this.handleHeadquarterChanged}
-//           allHeadquarters={allHeadquarters}
-//           loadingHeadquarters={loadingHeadquarters}
-//         />
-//         <DashboardFilters changeFilters={this.handleFiltersChanged} />
-//       </Grid>
-//     )
-//   }
-
 //   renderContent = () => {
 //     const { loading, events } = this.state
 
@@ -394,7 +362,6 @@ export default function EventsPage(): JSX.Element {
 
 //     return (
 //       <React.Fragment>
-//         {this.renderFilters()}
 //         <Grid container>
 //           <EventList
 //             events={events}
