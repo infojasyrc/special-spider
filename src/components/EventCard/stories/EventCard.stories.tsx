@@ -11,7 +11,7 @@ export default {
 const Template: Story<EventCardProps> = (args) => <EventCard {...args} />
 
 const eventCreated: Conference = {
-  id: '',
+  id: '0001',
   name: 'Google IO 2021',
   status: 'created',
   eventDate: '2021-03-15T17:00:00.000',
