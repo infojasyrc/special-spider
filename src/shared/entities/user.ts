@@ -4,7 +4,7 @@ export interface User {
   lastName: string
   isAdmin: boolean
   email: string
-  role?: string
+  role?: UserRole
   isSuperAdmin?: boolean
 }
 
@@ -22,4 +22,9 @@ export interface UserCredentials {
 
 export interface UserSession extends UserInApp, UserCredentials {
   token: string
+}
+
+export interface UserRole {
+  id: string
+  name: string
 }

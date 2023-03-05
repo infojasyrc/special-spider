@@ -45,6 +45,7 @@ export default function UserList({ users }: UserListProps): JSX.Element {
                 <TableCell></TableCell>
                 <TableCell>{user.email}</TableCell>
                 <TableCell>{`${user.firstName} ${user.lastName}`}</TableCell>
+                <TableCell>{user.role?.name}</TableCell>
                 <TableCell>
                   <Checkbox
                     checked={user.isAdmin}
