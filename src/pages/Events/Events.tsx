@@ -1,11 +1,14 @@
 import { useState, useContext, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
+import { createStyles, Fab, makeStyles } from '@material-ui/core'
+import AddIcon from '@material-ui/icons/Add'
 
 // import { withMessage } from '../../hocs/Snackbar'
 
 import UserContext from '../../shared/contexts/UserContext'
 
 import EventsView from '../../components/EventsView/EventsView'
+import NavigationWrapper from '../../components/Navigation/NavigationWrapper'
 // import Loading from '../../components/Loading'
 
 // import PreviewEvent from '../../components/PreviewEvent/PreviewEvent'
@@ -15,12 +18,15 @@ import EventsView from '../../components/EventsView/EventsView'
 
 import { HeadquarterAPI, ConferenceAPI } from '../../shared/api'
 
-import {
-  Conference,
-  Headquarter,
-} from '../../shared/entities'
+import { Conference, Headquarter } from '../../shared/entities'
 
 import { sortAscending } from '../../tools/sorting'
+
+const useStyles = makeStyles(() =>
+  createStyles({
+    addButton: {},
+  })
+)
 
 export default function EventsPage(): JSX.Element {
   const [allHeadquarters, setAllHeadquarters] = useState<Headquarter[]>([])
@@ -35,6 +41,7 @@ export default function EventsPage(): JSX.Element {
 
   const { user } = useContext(UserContext)
   const history = useHistory()
+  const classes = useStyles()
 
   const fetchHeadquarters = () => {
     setLoadingHeadquarters(true)
@@ -97,6 +104,23 @@ export default function EventsPage(): JSX.Element {
     history.push(`/play-event/${event.id}`)
   }
 
+  const renderAddButton = () => {
+    // const { classes, userContext } = this.props
+    // const { isAdmin } = userContext.user
+
+    // if (!isAdmin) {
+    //   return null
+    // }
+
+    return (
+      <NavigationWrapper path="/event/add">
+        <Fab className={classes.addButton} color="primary">
+          <AddIcon />
+        </Fab>
+      </NavigationWrapper>
+    )
+  }
+
   if (loading) {
     return <>Loading events</>
   }
@@ -113,6 +137,8 @@ export default function EventsPage(): JSX.Element {
           onSelectedEvent={handleEnterClicked}
         />
       )}
+
+      {renderAddButton()}
     </>
   )
 }
@@ -375,22 +401,6 @@ export default function EventsPage(): JSX.Element {
 //     )
 //   }
 
-//   renderAddButton = () => {
-//     const { classes, userContext } = this.props
-//     const { isAdmin } = userContext.user
-
-//     if (!isAdmin) {
-//       return null
-//     }
-
-//     return (
-//       <NavigationWrapper path="/event/add">
-//         <Fab className={classes.add} color="primary">
-//           <AddIcon />
-//         </Fab>
-//       </NavigationWrapper>
-//     )
-//   }
 //   // TODO: This function should be converted to a specific component
 //   renderPreviewEvent = () => {
 //     const { selectedEvent } = this.state

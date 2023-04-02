@@ -4,6 +4,7 @@ import { createStyles, makeStyles, Grid, TextField } from '@material-ui/core'
 import EventTypes from '../EventTypes/EventTypes'
 import SelectWithLoading from '../DropDown/SelectWithLoading'
 import TextFieldWithValidation from '../TextField/TextFieldWithValidation'
+import FormButtons from '../FormButtons/FormButtons'
 
 import { ConferenceDataValidation, Headquarter } from '../../shared/entities'
 
@@ -78,6 +79,10 @@ export default function EventView({
   }
 
   const handleRequiredFieldBlurred = () => {}
+
+  const handleCancelButton = () => {}
+
+  const handleSubmitButton = () => {}
 
   return (
     <Grid container className={classes.container}>
@@ -165,6 +170,11 @@ export default function EventView({
       <Grid item xs={12} sm={6}>
         {/* {this.renderUsers()} */}
       </Grid>
+      <FormButtons
+        disableMainButton={false}
+        onCancel={handleCancelButton}
+        onSubmit={handleSubmitButton}
+      />
     </Grid>
   )
 }
