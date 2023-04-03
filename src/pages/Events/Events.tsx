@@ -104,23 +104,6 @@ export default function EventsPage(): JSX.Element {
     history.push(`/play-event/${event.id}`)
   }
 
-  const renderAddButton = () => {
-    // const { classes, userContext } = this.props
-    // const { isAdmin } = userContext.user
-
-    // if (!isAdmin) {
-    //   return null
-    // }
-
-    return (
-      <NavigationWrapper path="/event/add">
-        <Fab className={classes.addButton} color="primary">
-          <AddIcon />
-        </Fab>
-      </NavigationWrapper>
-    )
-  }
-
   if (loading) {
     return <>Loading events</>
   }
@@ -138,7 +121,11 @@ export default function EventsPage(): JSX.Element {
         />
       )}
 
-      {renderAddButton()}
+      <NavigationWrapper path="/event/add">
+        <Fab className={classes.addButton} color="primary">
+          <AddIcon />
+        </Fab>
+      </NavigationWrapper>
     </>
   )
 }
