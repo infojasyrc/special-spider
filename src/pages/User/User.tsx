@@ -5,7 +5,7 @@ import UserForm from '../../components/UserForm/UserForm'
 import { RolesAPI } from '../../shared/api'
 import { UserRole } from '../../shared/entities'
 
-export default function UserPage() {
+export default function UserPage(): JSX.Element {
   const [availableRoles, setAvailableRoles] = useState<UserRole[]>([])
   const [loading, setLoading] = useState(true)
 
