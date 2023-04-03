@@ -1,12 +1,16 @@
 import { render, screen } from '@testing-library/react'
 
-import UserForm from './UserForm'
+import UserForm, { UserFormProps } from './UserForm'
 
-const renderComponent = () => render(<UserForm />)
+const renderComponent = (props: UserFormProps) =>
+  render(<UserForm {...props} />)
 
 describe('user form component', () => {
   it('should render all elements', () => {
-    renderComponent()
+    const props: UserFormProps = {
+      availableRoles: [],
+    }
+    renderComponent(props)
 
     const name = screen.getByRole('textbox', { name: 'Name', exact: true })
     const lastName = screen.getByRole('textbox', {

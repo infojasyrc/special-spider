@@ -5,7 +5,15 @@ import SelectWithLoading from '../DropDown/SelectWithLoading'
 import FormButtons from '../FormButtons/FormButtons'
 import TextFieldWithValidation from '../TextField/TextFieldWithValidation'
 
-export default function UserForm(): JSX.Element {
+import { UserRole } from '../../shared/entities'
+
+export interface UserFormProps {
+  availableRoles: UserRole[]
+}
+
+export default function UserForm({
+  availableRoles,
+}: UserFormProps): JSX.Element {
   const [name] = useState('')
   const [lastName] = useState('')
   const [email] = useState('')
@@ -70,7 +78,7 @@ export default function UserForm(): JSX.Element {
           <SelectWithLoading
             attributeValue={role ? role : ''}
             attributeRequired={true}
-            attributeOptions={[]}
+            attributeOptions={availableRoles}
             attributeName="role"
             attributeLabel="Role"
             error={false}
